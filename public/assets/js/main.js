@@ -16,6 +16,7 @@
 
 
 ==================================================*/
+
 (function ($) {
     'use strict';
    
@@ -37,7 +38,7 @@
         rtsJs.videoActivation();
         rtsJs.jaraLux();
         rtsJs.backToTopInit();
-        rtsJs.cookiePopup();
+        //rtsJs.cookiePopup();
         rtsJs.datePicker();
         rtsJs.magnificPopup();
         rtsJs.mobileMenu();
@@ -45,6 +46,7 @@
         rtsJs.stickySidebar();
         rtsJs.preloader();
       },
+
        // sticky Header
       headerSticky: function () {
         $(window).on("scroll", function() {
@@ -423,6 +425,7 @@
           }
       });
       
+      
       },
 
       backToTopInit: function (e) {
@@ -446,9 +449,16 @@
         });
       },
 
-      cookiePopup: function (e) {
-        $.gdprcookie.init();
-      },
+      cookiePopup: function () {
+        if (typeof window.cookieconsent !== 'undefined' && typeof window.cookieconsent.init === 'function') {
+            window.cookieconsent.init({
+                // your config here
+            });
+        } else {
+            console.warn('cookieconsent plugin is missing');
+        }
+    },
+    
       datePicker: function (e) {
         $(function () {
           $("#check__in, #check__out").datepicker({
@@ -512,4 +522,7 @@
 
   
   })(jQuery, window)  
+
+
+
 
