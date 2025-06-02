@@ -77,33 +77,13 @@
                                         </div>
                                     </li>
 
-                                    <li class="navigation__menu--item has-child has-arrow">
-                                        <a href="#" class="navigation__menu--item__link">Rooms</a>
-                                        <ul class="submenu sub__style" role="menu">
-                                            <li role="menuitem" class="has-child has-arrow">
-                                                <a href="#">Room Style</a>
-                                                <ul class="sub__style" role="menu">
-                                                    <li role="menuitem"><a href="{{ url('/room-one') }}">Room One</a></li>
-                                                    <li role="menuitem"><a href="{{ url('/room-two') }}">Room Two</a></li>
-                                                    <li role="menuitem"><a href="{{ url('/room-three') }}">Room Three</a></li>
-                                                    <li role="menuitem"><a href="{{ url('/room-four') }}">Room Four</a></li>
-                                                </ul>
-                                            </li>
-                                            <li role="menuitem" class="has-child has-arrow">
-                                                <a href="#">Room Details</a>
-                                                <ul class="sub__style" role="menu">
-                                                    <li role="menuitem"><a href="{{ url('/room-details-1') }}">Room Details 1</a></li>
-                                                    <li role="menuitem"><a href="{{ url('/room-details-2') }}">Room Details 2</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
+
 
                                     <li class="navigation__menu--item has-child has-arrow">
                                         <a href="#" class="navigation__menu--item__link">Pages</a>
                                         <ul class="submenu sub__style" role="menu">
-                                            <li role="menuitem"><a href="{{ url('/restaurant') }}">Restaurant</a></li>
-                                            <li role="menuitem"><a href="{{ url('/gallery') }}">Gallery</a></li>
+                                            <li role="menuitem"><a href="{{ route('resturant.index') }}">Restaurant</a></li>
+                                            <li role="menuitem"><a href="{{ route('gallery.index') }}">Gallery</a></li>
                                             <li role="menuitem"><a href="{{ url('/about') }}">About</a></li>
                                         </ul>
                                     </li>

@@ -41,6 +41,24 @@ class PageController extends Controller
     {
         return view('guest.urbanGreenRooms'); 
     }
-  
+
+    //Resturant
+    public function resturant()
+    {
+        return view('guest.resturant'); 
+    }
+
+
+    //Gallery
+    public function gallery()
+    {
+        return view('guest.gallery'); 
+    }
+
+    //Gallery
+    public function about()
+    {
+        return view('guest.about'); 
+    }
 
 }
