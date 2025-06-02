@@ -3,12 +3,14 @@
 @section('title', 'Urban Hotels - Luxury Hotel & Resort') {{-- Sets the title for this specific page --}}
 
 @section('content')
+    <!-- banner area -->
     <div class="rts__section banner__area is__home__one banner__height banner__center">
         <div class="banner__slider overflow-hidden">
             <div class="swiper-wrapper">
+                <!-- single slider item -->
                 <div class="swiper-slide">
                     <div class="banner__slider__image">
-                        <img src="{{ asset('assets/images/banner/1.webp') }}" alt="">
+                        <img src="assets/images/banner/1.webp" alt="">
                     </div>
                     <div class="container">
                         <div class="row justify-content-center">
@@ -17,16 +19,19 @@
                                     <span class="h6 subtitle__icon">Welcome to Our Hotel</span>
                                     <h1>Luxury Stay Hotel Experience Comfort & Elegance</h1>
                                     <p class="sub__text">Choosing Bokinn was one of the best decisions we've ever made. They have proven to be a reliable and innovative partner</p>
-                                    <a href="{{ url('/room-two') }}" class="theme-btn btn-style fill no-border "><span>Discover Room</span>
+                                    <a href="room-two.html" class="theme-btn btn-style fill no-border "><span>Discover Room</span>
                                     </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- single slider item end -->
+
+                <!-- single slider item -->
                 <div class="swiper-slide">
                     <div class="banner__slider__image">
-                        <img src="{{ asset('assets/images/banner/2.webp') }}" alt="">
+                        <img src="assets/images/banner/2.webp" alt="">
                     </div>
                     <div class="container">
                         <div class="row justify-content-center">
@@ -35,16 +40,19 @@
                                     <span class="h6 subtitle__icon">Welcome to Our Spa</span>
                                     <h1>Lavish Getaway A Blend of Comfort & Style</h1>
                                     <p class="sub__text">Choosing Bokinn was one of the best decisions we've ever made. They have proven to be a reliable and innovative partner</p>
-                                    <a href="{{ url('/room-one') }}" class="theme-btn btn-style fill no-border "><span>Discover Room</span>
+                                    <a href="room-one.html" class="theme-btn btn-style fill no-border "><span>Discover Room</span>
                                     </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- single slider item end -->
+
+                <!-- single slider item -->
                 <div class="swiper-slide">
                     <div class="banner__slider__image">
-                        <img src="{{ asset('assets/images/banner/banner-3.webp') }}" alt="">
+                        <img src="assets/images/banner/banner-3.webp" alt="">
                     </div>
                     <div class="container">
                         <div class="row justify-content-center">
@@ -53,14 +61,16 @@
                                     <span class="h6 subtitle__icon">Welcome to Our Spa</span>
                                     <h1> A Perfect Fusion of Comfort and Elegance</h1>
                                     <p class="sub__text">Choosing Bokinn was one of the best decisions we've ever made. They have proven to be a reliable and innovative partner</p>
-                                    <a href="{{ url('/room-one') }}" class="theme-btn btn-style fill no-border "><span>Discover Room</span>
+                                    <a href="room-one.html" class="theme-btn btn-style fill no-border "><span>Discover Room</span>
                                     </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                </div>
+                <!-- single slider item end -->
+
+            </div>
             <div class="rts__slider__nav">
                 <div class="rts__slide">
                     <div class="next">
@@ -79,14 +89,19 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
+    <!-- banner area end -->
+
+    <!-- advance search -->
     <div class="rts__section advance__search__section is__home__one">
         <div class="container">
             <div class="row">
-                <form action="{{ url('/room-two') }}" method="post" class="advance__search"> {{-- Update form action --}}
-                    @csrf {{-- Add Laravel's CSRF token for forms --}}
+                <form action="{{ route('urbanRedRooms.index') }}" method="post" class="advance__search">
+    @csrf
                     <div class="advance__search__wrapper wow fadeInUp">
+                        <!-- single input -->
                         <div class="query__input">
                             <label for="check__in" class="query__label">Check In</label>
                             <input type="text" id="check__in" name="check__in" placeholder="15 Jun 2024" required>
@@ -94,6 +109,9 @@
                                 <i class="flaticon-calendar"></i>
                             </div>
                         </div>
+                        <!-- single input end -->
+
+                        <!-- single input -->
                         <div class="query__input">
                             <label for="check__out" class="query__label">Check Out</label>
                             <input type="text" id="check__out" name="check__out" placeholder="15 May 2024" required>
@@ -101,6 +119,9 @@
                                 <i class="flaticon-calendar"></i>
                             </div>
                         </div>
+                        <!-- single input end -->
+
+                        <!-- single input -->
                         <div class="query__input">
                             <label for="adult" class="query__label ">Adult</label>
                             <select name="adult" id="adult" class="form-select">
@@ -118,6 +139,9 @@
                                 <i class="flaticon-user"></i>
                             </div>
                         </div>
+                        <!-- single input end -->
+
+                        <!-- single input -->
                         <div class="query__input">
                             <label for="child" class="query__label ">Child</label>
                             <select name="child" id="child" class="form-select">
@@ -135,26 +159,33 @@
                                 <i class="flaticon-user"></i>
                             </div>
                         </div>
+                        <!-- single input end -->
+
+                        <!-- submit button -->
                         <button class="theme-btn btn-style fill no-border search__btn">
                             <span>Check Now</span>
                         </button>
-                        </div>
+                        <!-- submit button end -->
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 
+    <!-- advance search end -->
+
+    <!-- about us -->
     <div class="rts__section about__area is__home__main section__padding">
         <div class="section__shape d-none d-xl-block">
-            <img src="{{ asset('assets/images/about/section__shape.svg') }}" alt="">
+            <img src="assets/images/about/section__shape.svg" alt="">
         </div>
         <div class="container">
             <div class="row">
                 <div class="about__wrapper">
                     <div class="image ">
-                        <div class="position-relative wow fadeInUp" data-wow-delay=".3s">
+                        <div class="position-relative  wow fadeInUp" data-wow-delay=".3s">
                             <div class="jara-mask-1 jarallax image-height">
-                                <img src="{{ asset('assets/images/about/about-1.webp') }}" class="jarallax-img" alt="">
+                                <img src="assets/images/about/about-1.webp" class="jarallax-img" alt="">
                             </div>
                         </div>
                         <div class="image__card radius-10 wow fadeInUp" data-wow-delay=".5s">
@@ -167,27 +198,30 @@
                             </div>
                         </div>
                         <div class="image__card__image wow fadeInUp">
-                            <img src="{{ asset('assets/images/about/about-main.webp') }}" width="312" height="230" alt="">
+                            <img src="assets/images/about/about-main.webp" width="312" height="230" alt="">
                         </div>
                     </div>
                     <div class="content">
                         <span class="h6 subtitle__icon__two d-block wow fadeInUp">About Us</span>
-                        <h2 class="content__title wow fadeInUp">Welcome To Our Urban Hotel & Resort</h2>
+                        <h2 class="content__title wow fadeInUp">Welcome To Our Moonlit Hotel & Resort</h2>
                         <p class="content__subtitle wow fadeInUp" data-wow-delay=".3s">Welcome to Bokinn, where luxury meets comfort in the heart of canada. Since 1999,
                             we have been dedicated to providing an exceptional stay for our guests, blending
                             modern amenities with timeless elegance.Our beautifully designed rooms and suites
                             offer stunning views and plush accommodations, ensuring a restful retreat whether
                             you're here for business or leisure.</p>
-                        <a href="{{ url('/about') }}" class="theme-btn btn-style fill no-border wow fadeInUp" data-wow-delay=".5s"><span>Learn More</span></a>
+                        <a href="#" class="theme-btn btn-style fill no-border wow fadeInUp" data-wow-delay=".5s"><span>Learn More</span></a>
                     </div>
 
                 </div>
             </div>
         </div>
     </div>
+    <!-- about us end -->
+
+    <!-- facilities -->
     <div class="rts__section facilities__area has__background has__shape py-90">
         <div class="section__shape">
-            <img src="{{ asset('assets/images/shape/facility-1.svg') }}" alt="">
+            <img src="assets/images/shape/facility-1.svg" alt="">
         </div>
         <div class="container">
             <div class="row justify-content-center text-center mb-40">
@@ -203,7 +237,7 @@
                 <div class="col-xl-3 col-lg-6 col-md-6">
                     <div class="card rts__card no-border is__home radius-6">
                         <div class="card-body">
-                            <div class="icon"><img src="{{ asset('assets/images/icon/bed.svg') }}" alt=""></div>
+                            <div class="icon"><img src="assets/images/icon/bed.svg" alt=""></div>
                             <a href="#">
                                 <h6 class="card-title h6 mb-15">Rooms and Suites</h6>
                             </a>
@@ -214,7 +248,7 @@
                 <div class="col-xl-3 col-lg-6 col-md-6">
                     <div class="card rts__card no-border is__home radius-6">
                         <div class="card-body">
-                            <div class="icon"><img src="{{ asset('assets/images/icon/security.svg') }}" alt=""></div>
+                            <div class="icon"><img src="assets/images/icon/security.svg" alt=""></div>
                             <a href="#">
                                 <h6 class="card-title h6 mb-15">24-Hour Security</h6>
                             </a>
@@ -225,7 +259,7 @@
                 <div class="col-xl-3 col-lg-6 col-md-6">
                     <div class="card rts__card no-border is__home radius-6">
                         <div class="card-body">
-                            <div class="icon"><img src="{{ asset('assets/images/icon/gym.svg') }}" alt=""></div>
+                            <div class="icon"><img src="assets/images/icon/gym.svg" alt=""></div>
                             <a href="#">
                                 <h6 class="card-title h6 mb-15">Fitness Center</h6>
                             </a>
@@ -236,7 +270,7 @@
                 <div class="col-xl-3 col-lg-6 col-md-6">
                     <div class="card rts__card no-border is__home radius-6">
                         <div class="card-body">
-                            <div class="icon"><img src="{{ asset('assets/images/icon/swimming-pool.svg') }}" alt=""></div>
+                            <div class="icon"><img src="assets/images/icon/swimming-pool.svg" alt=""></div>
                             <a href="#">
                                 <h6 class="card-title h6 mb-15">Swimming Pool</h6>
                             </a>
@@ -247,6 +281,9 @@
             </div>
         </div>
     </div>
+    <!-- facilities end -->
+
+    <!-- our room -->
     <div class="rts__section pt-120">
         <div class="container">
             <div class="row">
@@ -261,16 +298,18 @@
                 </div>
             </div>
         </div>
+        <!-- row end -->
         <div class="row">
             <div class="main__room__slider overflow-hidden wow fadeInUp" data-wow-delay=".5s">
                 <div class="swiper-wrapper">
+                    <!-- single room slider -->
                     <div class="swiper-slide">
                         <div class="room__slide__box radius-6">
                             <div class="room__thumbnail jara-mask-2 jarallax">
-                                <img height="585" width="420" class="radius-6 jarallax-img" src="{{ asset('assets/images/room/1.webp') }}" alt="">
+                                <img height="585" width="420" class="radius-6 jarallax-img" src="assets/images/room/1.webp" alt="">
                             </div>
                             <div class="room__content">
-                                <a href="{{ url('/room-details-1') }}" class="room__title">
+                                <a href="room-details-1.html" class="room__title">
                                     <h5>The Ritz-Carlton</h5>
                                 </a>
                                 <div class="room__content__meta">
@@ -281,13 +320,16 @@
                             </div>
                         </div>
                     </div>
+                    <!-- single room slider end -->
+
+                    <!-- single room slider -->
                     <div class="swiper-slide">
                         <div class="room__slide__box radius-6">
                             <div class="room__thumbnail jara-mask-2 jarallax">
-                                <img height="585" width="420" class="radius-6 jarallax-img" src="{{ asset('assets/images/room/2.webp') }}" alt="">
+                                <img height="585" width="420" class="radius-6 jarallax-img" src="assets/images/room/2.webp" alt="">
                             </div>
                             <div class="room__content">
-                                <a href="{{ url('/room-details-1') }}" class="room__title">
+                                <a href="room-details-1.html" class="room__title">
                                     <h5>Four Seasons Hotels</h5>
                                 </a>
                                 <div class="room__content__meta">
@@ -298,17 +340,389 @@
                             </div>
                         </div>
                     </div>
-                    {{-- ... and the rest of your room slider items would go here --}}
+                    <!-- single room slider end -->
+
+                    <!-- single room slider -->
+                    <div class="swiper-slide">
+                        <div class="room__slide__box radius-6">
+                            <div class="room__thumbnail jara-mask-2 jarallax">
+                                <img height="585" width="420" class="radius-6 jarallax-img" src="assets/images/room/3.webp" alt="">
+                            </div>
+                            <div class="room__content">
+                                <a href="room-details-1.html" class="room__title">
+                                    <h5>Waldorf Astoria Hotels</h5>
+                                </a>
+                                <div class="room__content__meta">
+                                    <span><i class="flaticon-construction"></i>35 sqm</span>
+                                    <span><i class="flaticon-user"></i>5 Person</span>
+                                </div>
+                                <span class="h4 rent mb-0 mt-15 d-block">150$</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- single room slider end -->
+
+                    <!-- single room slider -->
+                    <div class="swiper-slide">
+                        <div class="room__slide__box radius-6">
+                            <div class="room__thumbnail jara-mask-2 jarallax">
+                                <img height="585" width="420" class="radius-6 jarallax-img" src="assets/images/room/4.webp" alt="">
+                            </div>
+                            <div class="room__content">
+                                <a href="room-details-1.html" class="room__title">
+                                    <h5>Waldorf Astoria Hotels</h5>
+                                </a>
+                                <div class="room__content__meta">
+                                    <span><i class="flaticon-construction"></i>35 sqm</span>
+                                    <span><i class="flaticon-user"></i>5 Person</span>
+                                </div>
+                                <span class="h4 rent mb-0 mt-15 d-block">150$</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- single room slider end -->
+
+                    <!-- single room slider -->
+                    <div class="swiper-slide">
+                        <div class="room__slide__box radius-6">
+                            <div class="room__thumbnail jara-mask-2 jarallax">
+                                <img height="585" width="420" class="radius-6 jarallax-img" src="assets/images/room/1.webp" alt="">
+                            </div>
+                            <div class="room__content">
+                                <a href="room-details-1.html" class="room__title">
+                                    <h5>Waldorf Astoria Hotels</h5>
+                                </a>
+                                <div class="room__content__meta">
+                                    <span><i class="flaticon-construction"></i>35 sqm</span>
+                                    <span><i class="flaticon-user"></i>5 Person</span>
+                                </div>
+                                <span class="h4 rent mb-0 mt-15 d-block">150$</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- single room slider end -->
+                </div>
+            </div>
+
+            <!-- pagination button -->
+            <div class="rts__pagination">
+                <div class="rts-pagination"></div>
+            </div>
+            <!-- pagination button end -->
+        </div>
+    </div>
+    <!-- our room end -->
+
+    <!-- special section start -->
+    <div class="rts__section offer__area is__home__one has__shape">
+        <div class="container">
+            <div class="row position-relative justify-content-center text-center mb-30">
+                <div class="col-lg-6 wow fadeInUp">
+                    <div class="section__topbar">
+                        <span class="h6 subtitle__icon__three mx-auto">Special Offer</span>
+                        <h2 class="section__title">Special Offer</h2>
+                    </div>
+                </div>
+            </div>
+            <!-- row end -->
+            <div class="row justify-content-center g-30">
+                <div class="col-lg-10 col-xl-6 col-xxl-5">
+                    <div class="single__offer__card">
+                        <a href="#">
+                            <img src="assets/images/offer/5.webp" alt="">
+                        </a>
+                        <div class="single__offer__card__content">
+                            <a href="#" class="h4">Family Fun Package</a>
+                            <ul class="offer__included list-unstyled">
+                                <li><i class="flaticon-check-circle"></i> 15% off on family suites</li>
+                                <li><i class="flaticon-check-circle"></i> Free meals for kids under 12</li>
+                                <li><i class="flaticon-check-circle"></i> Complimentary tickets</li>
+                                <li><i class="flaticon-check-circle"></i> The local amusement park</li>
+                            </ul>
+                            <h3 class="offer__price mb-0">$39.00</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-10 col-xl-6 col-xxl-7">
+                    <div class="d-flex flex-column gap-30">
+
+                        <div class="single__offer__card is__flex">
+                            <a href="#">
+                                <img src="assets/images/offer/6.webp" width="265" height="310" alt="">
+                            </a>
+                            <div class="single__offer__card__content">
+                                <a href="#" class="h5">Spa Retreat</a>
+                                <ul class="offer__included list-unstyled">
+                                    <li><i class="flaticon-check-circle"></i> A two-night stay in a room</li>
+                                    <li><i class="flaticon-check-circle"></i> Daily spa treatments</li>
+                                    <li><i class="flaticon-check-circle"></i> Healthy breakfast and lunch</li>
+                                    <li><i class="flaticon-check-circle"></i> Access to all spa </li>
+                                </ul>
+                                <h4 class="offer__price mb-0">$39.00</h4>
+                            </div>
+                        </div>
+
+                        <div class="single__offer__card is__flex">
+                            <a href="#">
+                                <img src="assets/images/offer/7.webp" width="265" height="310" alt="">
+                            </a>
+                            <div class="single__offer__card__content">
+                                <a href="#" class="h5">Romantic Getaway</a>
+                                <ul class="offer__included list-unstyled">
+                                    <li><i class="flaticon-check-circle"></i> A two-night stay in a room</li>
+                                    <li><i class="flaticon-check-circle"></i> Daily spa treatments</li>
+                                    <li><i class="flaticon-check-circle"></i> Healthy breakfast and lunch</li>
+                                    <li><i class="flaticon-check-circle"></i> Access to all spa </li>
+                                    <h4 class="offer__price mb-0">$39.00</h4>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    {{-- Any other unique content for index.html from line ~900 onwards --}}
+    <!-- special section end -->
+
+    <!-- gallery -->
+    <div class="rts__section is__home__main">
+        <div class="container-fluid">
+            <div class="row position-relative justify-content-center text-center mb-30">
+                <div class="col-lg-6 wow fadeInUp">
+                    <div class="section__topbar">
+                        <span class="h6 subtitle__icon__three mx-auto">Instagram Post</span>
+                        <h2 class="section__title">Follow on Instagram</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="insta__gallery__slider overflow-hidden">
+                    <div class="swiper-wrapper gallery">
+                        <!-- single gallery image -->
+                        <div class="swiper-slide">
+                            <div class="gallery__item">
+                                <img src="assets/images/insta/1.webp" height="300" width="300" alt="">
+                                <a href="assets/images/insta/1.webp" class="gallery__popup">
+                                    <img src="assets/images/icon/instagram.svg" height="40" width="40" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <!-- single gallery image end -->
+                        <!-- single gallery image -->
+                        <div class="swiper-slide">
+                            <div class="gallery__item">
+                                <img src="assets/images/insta/2.webp" height="300" width="300" alt="">
+                                <a href="assets/images/insta/2.webp" class="gallery__popup">
+                                    <img src="assets/images/icon/instagram.svg" height="40" width="40" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <!-- single gallery image end -->
+                        <!-- single gallery image -->
+                        <div class="swiper-slide">
+                            <div class="gallery__item">
+                                <img src="assets/images/insta/3.webp" height="300" width="300" alt="">
+                                <a href="assets/images/insta/3.webp" class="gallery__popup">
+                                    <img src="assets/images/icon/instagram.svg" height="40" width="40" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <!-- single gallery image end -->
+                        <!-- single gallery image -->
+                        <div class="swiper-slide">
+                            <div class="gallery__item">
+                                <img src="assets/images/insta/4.webp" height="300" width="300" alt="">
+                                <a href="assets/images/insta/4.webp" class="gallery__popup">
+                                    <img src="assets/images/icon/instagram.svg" height="40" width="40" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <!-- single gallery image end -->
+                        <!-- single gallery image -->
+                        <div class="swiper-slide">
+                            <div class="gallery__item">
+                                <img src="assets/images/insta/5.webp" height="300" width="300" alt="">
+                                <a href="assets/images/insta/5.webp" class="gallery__popup">
+                                    <img src="assets/images/icon/instagram.svg" height="40" width="40" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <!-- single gallery image end -->
+
+                        <!-- single gallery image -->
+                        <div class="swiper-slide">
+                            <div class="gallery__item">
+                                <img src="assets/images/insta/6.webp" height="300" width="300" alt="">
+                                <a href="assets/images/insta/6.webp" class="gallery__popup">
+                                    <img src="assets/images/icon/instagram.svg" height="40" width="40" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <!-- single gallery image end -->
+
+                        <!-- single gallery image -->
+                        <div class="swiper-slide">
+                            <div class="gallery__item">
+                                <img src="assets/images/insta/1.webp" height="300" width="300" alt="">
+                                <a href="assets/images/insta/1.webp" class="gallery__popup">
+                                    <img src="assets/images/icon/instagram.svg" height="40" width="40" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <!-- single gallery image end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- gallery end -->
+
+
+    <!-- popup model -->
+
+
+    <div class="modal similar__modal fade " id="loginModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="max-content similar__form form__padding">
+                    <div class="d-flex mb-3 align-items-center justify-content-between">
+                        <h6 class="mb-0">Login To Moonlit</h6>
+                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                        </button>
+                    </div>
+                    <form action="candidate-dashboard.html" method="post" class="d-flex flex-column gap-3">
+                        <div class="form-group">
+                            <label for="email-popup" class="text-dark mb-3">Your Email</label>
+                            <div class="position-relative">
+                                <input type="email" name="email-popup" id="email-popup" placeholder="Enter your email" required>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="text-dark mb-3">Password</label>
+                            <div class="position-relative">
+                                <input type="password" name="password" id="password" placeholder="Enter your password" required>
+
+                            </div>
+                        </div>
+                        <div class="d-flex flex-wrap justify-content-between align-items-center ">
+                            <div class="form-check d-flex align-items-center gap-2">
+                                <input class="form-check-input mt-0" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label mb-0" for="flexCheckDefault">
+                                    Remember me
+                                </label>
+                            </div>
+                            <a href="#" class="forgot__password text-para" data-bs-toggle="modal" data-bs-target="#forgotModal">Forgot Password?</a>
+                        </div>
+                        <div class="form-group my-3">
+                            <button class="theme-btn btn-style sm-btn fill w-100"><span>Login</span></button>
+                        </div>
+                    </form>
+                    <div class="d-block has__line text-center">
+                        <p>Or</p>
+                    </div>
+                    <div class="d-flex gap-4 flex-wrap justify-content-center mt-20 mb-20">
+                        <div class="is__social google">
+                            <button class="theme-btn btn-style sm-btn"><span>Continue with Google</span></button>
+                        </div>
+                        <div class="is__social facebook">
+                            <button class="theme-btn btn-style sm-btn"><span>Continue with Facebook</span></button>
+                        </div>
+                    </div>
+                    <span class="d-block text-center ">Don`t have an account? <a href="#" data-bs-target="#signupModal" data-bs-toggle="modal" class="text-primary">Sign Up</a> </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- signup form -->
+    <div class="modal similar__modal fade " id="signupModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="max-content similar__form form__padding">
+                    <div class="d-flex mb-3 align-items-center justify-content-between">
+                        <h6 class="mb-0">Create A Free Account</h6>
+                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                        </button>
+                    </div>
+
+                    <form action="#" class="d-flex flex-column gap-3">
+                        <div class="form-group">
+                            <label for="sname" class=" text-dark mb-3">Your Name</label>
+                            <div class="position-relative">
+                                <input type="text" name="sname" id="sname" placeholder="Candidate" required>
+                                <i class="fa-light fa-user icon"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signemail" class=" text-dark mb-3">Your Email</label>
+                            <div class="position-relative">
+                                <input type="email" name="signemail" id="signemail" placeholder="Enter your email" required>
+                                <i class="fa-sharp fa-light fa-envelope icon"></i>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="spassword" class=" text-dark mb-3">Password</label>
+                            <div class="position-relative">
+                                <input type="password" name="spassword" id="spassword" placeholder="Enter your password" required>
+                                <i class="fa-light fa-lock icon"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-group my-3">
+                            <button class="theme-btn btn-style sm-btn fill w-100"><span>Register</span></button>
+                        </div>
+                    </form>
+                    <div class="d-block has__line text-center">
+                        <p>Or</p>
+                    </div>
+                    <div class="d-flex flex-wrap justify-content-center gap-4 mt-20 mb-20">
+                        <div class="is__social google">
+                            <button class="theme-btn btn-style sm-btn"><span>Continue with Google</span></button>
+                        </div>
+                        <div class="is__social facebook">
+                            <button class="theme-btn btn-style sm-btn"><span>Continue with Facebook</span></button>
+                        </div>
+                    </div>
+                    <span class="d-block text-center ">Have an account? <a href="#" data-bs-target="#loginModal" data-bs-toggle="modal" class="text-primary">Login</a> </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- forgot password form -->
+    <div class="modal similar__modal fade " id="forgotModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="max-content similar__form form__padding">
+                    <div class="d-flex mb-3 align-items-center justify-content-between">
+                        <h6 class="mb-0">Forgot Password</h6>
+                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                        </button>
+                    </div>
+                    <form action="#" class="d-flex flex-column gap-3">
+                        <div class="form-group">
+                            <label for="fmail" class=" text-dark mb-3">Your Email</label>
+                            <div class="position-relative">
+                                <input type="email" name="email" id="fmail" placeholder="Enter your email" required>
+                                <i class="fa-sharp fa-light fa-envelope icon"></i>
+                            </div>
+                        </div>
+                        <div class="form-group my-3">
+                            <button class="theme-btn btn-style sm-btn fill w-100"><span>Reset Password</span></button>
+                        </div>
+                    </form>
+
+                    <span class="d-block text-center ">Remember Your Password? 
+                <a href="#" data-bs-target="#loginModal" data-bs-toggle="modal" class="text-primary">Login</a> </span>
+                </div>
+            </div>
+        </div>
+    </div>
 
 @endsection
 
-{{-- Optional: If you find any JS/CSS in the original index.html that is *only* used on the homepage
-     and nowhere else, you would push them here. For example:
+{{--
 @push('scripts')
     <script src="{{ asset('assets/js/homepage-animations.js') }}"></script>
 @endpush

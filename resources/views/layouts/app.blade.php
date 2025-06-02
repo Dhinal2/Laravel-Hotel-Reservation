@@ -37,7 +37,7 @@
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <div class="location">
-                        <a class="link__item gap-10" href="#"><i class="flaticon-marker"></i>10 Greenlands Lane, Colombo</a>
+                        <a class="link__item gap-10" href="#"><i class="flaticon-marker"></i>Greenlands Lane, Colombo</a>
                     </div>
                 </div>
             </div>
@@ -58,32 +58,19 @@
                                                 <div class="menu__item">
                                                     <a href="{{ url('/') }}">
                                                         <img src="{{ asset('assets/images/menu/main.webp') }}" height="250" alt="">
-                                                        <span>Luxury Hotel</span>
-                                                    </a>
-                                                </div>
-
-                                                <div class="menu__item">
-                                                    <a href="{{ url('/index-3') }}">
-                                                        <img src="{{ asset('assets/images/menu/03.webp') }}" height="250" alt="">
-                                                        <span>OceanBreeze Resort</span>
+                                                        <span>Urban Red</span>
                                                     </a>
                                                 </div>
                                                 <div class="menu__item">
-                                                    <a href="{{ url('/index-4') }}">
-                                                        <img src="{{ asset('assets/images/menu/04.webp') }}" height="250" alt="">
-                                                        <span>Apartment Hotel</span>
-                                                    </a>
-                                                </div>
-                                                <div class="menu__item">
-                                                    <a href="{{ url('/index-5') }}">
+                                                    <a href="{{ route('urbanblue.index') }}"> 
                                                         <img src="{{ asset('assets/images/menu/4.webp') }}" height="250" alt="">
-                                                        <span>Mountain Hotel</span>
+                                                        <span>Urban Blue</span>
                                                     </a>
                                                 </div>
                                                 <div class="menu__item">
                                                     <a href="{{ url('/index-6') }}">
                                                         <img src="{{ asset('assets/images/menu/5.webp') }}" height="250" alt="">
-                                                        <span>City Hotel</span>
+                                                        <span>Urban Green</span>
                                                     </a>
                                                 </div>
                                             </div>
@@ -146,14 +133,109 @@
     {{-- The dynamic content of each page will be injected here --}}
     @yield('content')
 
-    {{-- You will likely have a common footer here. Since you only shared the top part, I'll add a placeholder. --}}
-    {{-- Please paste your template's footer HTML here, converting paths with asset(). --}}
+    {{-- Footed Section --}}
     <footer>
         <p style="text-align: center; padding: 20px;">&copy; {{ date('Y') }} Urban Hotels. All Rights Reserved.</p>
     </footer>
+ <!-- footer style one -->
+ <footer class="rts__section rts__footer is__common__footer footer__background has__shape">
+    <div class="section__shape">
+        <div class="shape__1">
+            <img src="assets/images/footer/shape-1.svg" alt="">
+        </div>
+        <div class="shape__2">
+            <img src="assets/images/footer/shape-2.svg" alt="">
+        </div>
+        <div class="shape__3">
+            <img src="assets/images/footer/shape-3.svg" alt="">
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="footer__newsletter">
+                <span class="h2">Join Our Newsletter</span>
+                <div class="rts__form">
+                    <form action="#" method="post">
+                        <input type="email" name="email" id="subscription" placeholder="Enter your mail" required>
+                        <button type="submit">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="footer__widget__wrapper">
+                <div class="rts__widget">
+                    <a href="index.html"><img class="footer__logo" src="assets/images/logo/logo.svg" alt="footer logo"></a>
+                    <p class="font-sm max-290 mt-20">
+                        Each room features plush bedding, high-quality linens, and a selection of ensure a restful night's sleep.
+                    </p>
+                </div>
+                <div class="rts__widget">
+                    <span class="widget__title">Quick Links</span>
+                    <ul>
+                        <li><a href="#" aria-label="footer__link">Rooms & Suites</a></li>
+                        <li><a href="#" aria-label="footer__link">Dining</a></li>
+                        <li><a href="#" aria-label="footer__link">Spa & Wellness</a></li>
+                        <li><a href="#" aria-label="footer__link">Special Offers</a></li>
+                    </ul>
+                </div>
+                <div class="rts__widget">
+                    <span class="widget__title">Guest Service</span>
+                    <ul>
+                        <li>24/7 Front Desk</li>
+                        <li>Parking</li>
+                        <li>Room Service</li>
+                        <li>Free Wi-Fi</li>
+                        <li>Concierge Service</li>
+                    </ul>
+                </div>
+                <div class="rts__widget">
+                    <span class="widget__title">Contact Us</span>
+                    <ul>
+                        <li><a aria-label="footer__contact" href="tel:+12505550199"><i class="flaticon-phone-flip"></i> +12505550199</a></li>
+                        <li><a aria-label="footer__contact" href="mailto:UjJw6@example.com"><i class="flaticon-envelope"></i>Moonlit@gmail.com</a></li>
+                        <li><a aria-label="footer__contact" href="#"><i class="flaticon-marker"></i>M5T 2L9 Toronto, Canada</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="copyright__text">
+        <div class="container">
+            <div class="row">
+                <div class="copyright__wrapper">
+                    <p class="mb-0">Copyright © 2024 Urban Hotels. All rights reserved.</p>
+                    <div class="footer__social__link">
+                        <a href="#" aria-label="footer__social" class="link__item">Facebook</a>
+                        <a href="#" aria-label="footer__social" class="link__item">Linkedin</a>
+                        <a href="#" aria-label="footer__social" class="link__item">Twitter</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- footer style one end -->
+<!-- back to top -->
+<button type="button" class="rts__back__top" id="rts-back-to-top">
+    <svg width="20" height="20" viewBox="0 0 13 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7.30201 1.51317L7.29917 21.3422C7.29912 21.7057 6.97211 21.9993 6.5674 21.9993C6.16269 21.9992 5.83577 21.7055 5.83582 21.342L5.83844 3.10055L1.39753 7.08842C1.11169 7.34511 0.647535 7.34506 0.361762 7.0883C0.0759894 6.83155 0.0760493 6.41464 0.361896 6.15795L6.05367 1.04682C6.26405 0.857899 6.5773 0.802482 6.85167 0.905201C7.12374 1.00792 7.30205 1.24823 7.30201 1.51317Z" fill="#FFF" />
+        <path d="M12.9991 6.6318C12.9991 6.80021 12.9282 6.96861 12.7841 7.09592C12.4983 7.35261 12.0341 7.35256 11.7483 7.0958L6.05118 1.97719C5.76541 1.72043 5.76547 1.30352 6.05131 1.04684C6.33716 0.790152 6.80131 0.790206 7.08709 1.04696L12.7842 6.16557C12.9283 6.29498 12.9991 6.46339 12.9991 6.6318Z" fill="#FFF" />
+    </svg>
 
-    {{-- Common JavaScript files for the entire template --}}
-    {{-- These are typically at the end of the body for performance --}}
+</button>
+<!-- back to top end -->
+
+
+<!-- THEME PRELOADER START -->
+<div class="loader-wrapper">
+    <div class="loader">
+    </div>
+    <div class="loader-section section-left"></div>
+    <div class="loader-section section-right"></div>
+</div>
+<!-- THEME PRELOADER END -->
+
 
     <script src="{{ asset('assets/js/plugins/a-jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugins/b-bootstrap.min.js') }}"></script>

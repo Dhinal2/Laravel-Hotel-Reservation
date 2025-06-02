@@ -2,6 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\PageController;
+
+Route::get('/urban-blue', [PageController::class, 'urbanBlue'])->name('urbanblue.index');
+
+Route::match(['get', 'post'], '/urban-redrooms', [PageController::class, 'urbanRedRooms'])->name('urbanRedRooms.index');
+
+
+
 Route::get('/', function () {
     return view('home'); // This will load resources/views/index.blade.php
 });
