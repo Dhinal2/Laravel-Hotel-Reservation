@@ -3,6 +3,11 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\TravelAgentController;
+
+require __DIR__.'/auth.php';
+
 
 Route::get('/urban-blue', [PageController::class, 'urbanBlue'])->name('urbanblue.index');
 
@@ -19,6 +24,17 @@ Route::match(['get', 'post'], '/resturant', [PageController::class, 'resturant']
 Route::match(['get', 'post'], '/gallery', [PageController::class, 'gallery'])->name('gallery.index');
 
 Route::match(['get', 'post'], '/about', [PageController::class, 'about'])->name('about.index');
+
+// Routes for Admin Dashboard
+Route::middleware(['auth', 'usertype:admin'])->group(function () {
+    Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.index');
+});
+
+
+// ROute for Travel Agent
+Route::middleware(['auth', 'usertype:travel_agent'])->group(function () {
+    Route::get('/travel-agent/home', [TravelAgentController::class, 'home'])->name('travel_agent.home');
+});
 
 Route::get('/', function () {
     return view('home'); // This will load resources/views/home.blade.php

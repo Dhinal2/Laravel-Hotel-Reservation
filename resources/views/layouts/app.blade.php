@@ -99,8 +99,33 @@
                         <a href="{{ url('/') }}"><img class="logo__class" src="{{ asset('assets/images/logo/urbanlogo.png') }}" alt="Urban Hotels"></a>
                     </div>
                     <div class="main__right">
-                        <a href="#" class="theme-btn btn-style sm-btn border d-none d-lg-block" aria-label="Login Button" data-bs-toggle="modal" data-bs-target="#loginModal"><span>Sign In</span></a>
-                        <a href="#" class="theme-btn btn-style sm-btn border d-none d-lg-block" aria-label="Sign Up Button" data-bs-toggle="modal" data-bs-target="#signupModal"><span>Sign Up</span></a>
+                        @guest
+                            {{-- Display Sign In and Sign Up buttons ONLY if the user is NOT logged in --}}
+                            <a href="#" class="theme-btn btn-style sm-btn border d-none d-lg-block" aria-label="Login Button" data-bs-toggle="modal" data-bs-target="#loginModal"><span>Sign In</span></a>
+                            <a href="#" class="theme-btn btn-style sm-btn border d-none d-lg-block" aria-label="Sign Up Button" data-bs-toggle="modal" data-bs-target="#signupModal"><span>Sign Up</span></a>
+                        @endguest
+                    
+                        @auth
+                            {{-- Display content ONLY if the user IS logged in --}}
+                            @if (Auth::user()->role === 'admin')
+                                {{-- Link for Admin users --}}
+                                <a href="{{ route('admin.index') }}" class="theme-btn btn-style sm-btn fill d-none d-lg-block"><span>Admin Dashboard</span></a>
+                            @elseif (Auth::user()->role === 'travel_agent')
+                                {{-- Link for Travel Agent users --}}
+                                <a href="{{ route('travel_agent.home') }}" class="theme-btn btn-style sm-btn fill d-none d-lg-block"><span>Agent Portal</span></a>
+                            @else {{-- This covers 'individual' users and any other roles not explicitly handled --}}
+                                {{-- Link for Individual users (e.g., to their profile or a general user dashboard) --}}
+                                <a href="{{ url('/') }}" class="theme-btn btn-style sm-btn fill d-none d-lg-block"><span>My Profile</span></a>
+                            @endif
+                    
+                            {{-- Add a Logout button that is visible when any user is logged in --}}
+                            <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                                @csrf {{-- CSRF token for security --}}
+                                <button type="submit" class="theme-btn btn-style sm-btn border d-none d-lg-block"><span>Logout</span></button>
+                            </form>
+                        @endauth
+                    
+                        {{-- The Book Now button and Mobile Menu button remain for all states --}}
                         <a href="{{ url('/room-details-1') }}" class="theme-btn btn-style sm-btn fill"><span>Book Now</span></a>
                         <button class="theme-btn btn-style sm-btn fill menu__btn d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                             <span><img src="{{ asset('assets/images/icon/menu-icon.svg') }}" alt=""></span>
@@ -109,6 +134,7 @@
                 </div>
             </div>
         </div>
+
     </header>
     {{-- The dynamic content of each page will be injected here --}}
     @yield('content')
@@ -205,6 +231,57 @@
 
 </button>
 <!-- back to top end -->
+
+
+<div class="modal similar__modal fade " id="loginModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="max-content similar__form form__padding">
+                <div class="d-flex mb-3 align-items-center justify-content-between">
+                    <h6 class="mb-0">Login To Urban Hotels</h6> <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('login') }}" method="post" class="d-flex flex-column gap-3">
+                    @csrf <div class="form-group">
+                        <label for="email-popup" class="text-dark mb-3">Your Email</label>
+                        <div class="position-relative">
+                            <input type="email" name="email" id="email-popup" placeholder="Enter your email" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="text-dark mb-3">Password</label>
+                        <div class="position-relative">
+                            <input type="password" name="password" id="password" placeholder="Enter your password" required>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-wrap justify-content-between align-items-center ">
+                        <div class="form-check d-flex align-items-center gap-2">
+                            <input class="form-check-input mt-0" type="checkbox" name="remember" id="flexCheckDefault">
+                            <label class="form-check-label mb-0" for="flexCheckDefault">
+                                Remember me
+                            </label>
+                        </div>
+                        <a href="#" class="forgot__password text-para" data-bs-toggle="modal" data-bs-target="#forgotModal">Forgot Password?</a>
+                    </div>
+                    <div class="form-group my-3">
+                        <button class="theme-btn btn-style sm-btn fill w-100"><span>Login</span></button>
+                    </div>
+                </form>
+                <div class="d-block has__line text-center">
+                    <p>Or</p>
+                </div>
+                <div class="d-flex gap-4 flex-wrap justify-content-center mt-20 mb-20">
+                    <div class="is__social google">
+                        <button class="theme-btn btn-style sm-btn"><span>Continue with Google</span></button>
+                    </div>
+                    <div class="is__social facebook">
+                        <button class="theme-btn btn-style sm-btn"><span>Continue with Facebook</span></button>
+                    </div>
+                </div>
+                <span class="d-block text-center ">Don`t have an account? <a href="#" data-bs-target="#signupModal" data-bs-toggle="modal" class="text-primary">Sign Up</a> </span>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <!-- THEME PRELOADER START -->

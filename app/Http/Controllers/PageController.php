@@ -60,5 +60,4 @@ class PageController extends Controller
     {
         return view('guest.about'); 
     }
-
 }
