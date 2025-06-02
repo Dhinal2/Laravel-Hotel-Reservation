@@ -259,9 +259,7 @@
                 <!-- single room end -->
             </div>
             <!-- row end -->
-            <div class="load__more__link">
-                <a href="#">Load More</a>
-            </div>
+
         </div>
     </div>
     <!-- single rooms end -->

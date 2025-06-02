@@ -96,7 +96,7 @@
                         </div>
                     </div>
                     <div class="main__logo">
-                        <a href="{{ url('/') }}"><img class="logo__class" src="{{ asset('assets/images/logo/logo.svg') }}" alt="moonlit"></a>
+                        <a href="{{ url('/') }}"><img class="logo__class" src="{{ asset('assets/images/logo/urbanlogo.png') }}" alt="Urban Hotels"></a>
                     </div>
                     <div class="main__right">
                         <a href="#" class="theme-btn btn-style sm-btn border d-none d-lg-block" aria-label="Login Button" data-bs-toggle="modal" data-bs-target="#loginModal"><span>Sign In</span></a>

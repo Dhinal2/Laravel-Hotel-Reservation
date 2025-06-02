@@ -12917,6 +12917,12 @@ textarea:focus-visible, input:focus-visible {
   gap: 5px;
 }
 
+.logo__class {
+  max-width: 180px; /* Adjust this value (e.g., 100px, 150px, 200px) until it looks good */
+  height: auto;    /* This maintains the aspect ratio of your JPG image */
+  display: block;  /* Helps with proper rendering and spacing */
+}
+
 /*
 if you need custom styles, please add it in this file below
 
