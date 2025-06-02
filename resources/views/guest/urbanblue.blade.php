@@ -25,7 +25,8 @@
     <div class="rts__section advance__search__section is__home__four wow fadeInUp" data-wow-delay='.5s'>
         <div class="container">
             <div class="row">
-                <form action="{{ url('/urbanred-rooms') }}" method="get" class="advance__search">
+                <form action="{{ route('urbanBlueRooms.index') }}" method="post" class="advance__search">
+                    @csrf
                     <div class="advance__search__wrapper wow fadeInUp">
                         <!-- single input -->
                         <div class="query__input">

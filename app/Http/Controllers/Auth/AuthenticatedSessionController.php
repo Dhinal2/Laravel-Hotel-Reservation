@@ -28,7 +28,17 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        $user = Auth::user(); // Get the authenticated user
+
+        // Conditional redirection based on user role
+        if ($user->role === 'admin') {
+            return redirect()->intended('/admin/dashboard');
+        } elseif ($user->role === 'travel_agent') {
+            return redirect()->intended('/travel-agent/home');
+        } else {
+            // For 'individual' or any other role, redirect to the main homepage
+            return redirect()->intended('/'); // Or RouteServiceProvider::HOME if you want a different default
+        }
     }
 
     /**

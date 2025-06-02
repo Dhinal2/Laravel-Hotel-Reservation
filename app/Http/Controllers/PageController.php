@@ -16,16 +16,31 @@ class PageController extends Controller
       //Home Rooms (Urban Red)
       public function urbanRedRooms()
       {
-          return view('urbanRedRooms'); 
+          return view('guest.urbanRedRooms'); 
       }
 
 
     //Urbanred controller
     public function urbanBlue()
     {
-        return view('urbanblue');
+        return view('guest.urbanblue');
     }
 
+    public function urbanBlueRooms()
+    {
+        return view('guest.urbanBlueRooms'); 
+    }
+
+    //Urbanred controller
+    public function urbanGreen()
+    {
+        return view('guest.urbangreen');
+    }
+
+    public function urbanGreenRooms()
+    {
+        return view('guest.urbanGreenRooms'); 
+    }
   
 
 }

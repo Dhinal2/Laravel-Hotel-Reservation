@@ -68,7 +68,7 @@
                                                     </a>
                                                 </div>
                                                 <div class="menu__item">
-                                                    <a href="{{ url('/index-6') }}">
+                                                    <a href="{{ route('urbangreen.index') }}">
                                                         <img src="{{ asset('assets/images/menu/5.webp') }}" height="250" alt="">
                                                         <span>Urban Green</span>
                                                     </a>
