@@ -4,7 +4,7 @@
 
 @section('content')
      <!-- page header -->
-    <div class="rts__section page__hero__height page__hero__bg" style="background-image: url(assets/images/pages/header__bg.webp);">
+     <div class="rts__section page__hero__height page__hero__bg" style="background-image: url({{ asset('assets/images/pages/header__bg.webp') }});">
         <div class="container">
             <div class="row align-items-center justify-content-center">
                 <div class="col-lg-12">
@@ -94,231 +94,52 @@
             </div>
         </div>
     </div>
-
     <!-- advance search end -->
 
     <!-- single rooms -->
-    <div class="rts__section pb-120">
-        <div class="container">
-            <div class="row g-30">
-                <!-- single room -->
-                <div class="col-xl-4 col-lg-6 col-md-6">
-                    <div class="room__card">
-                        <div class="room__card__top">
-                            <div class="room__card__image">
-                                <a href="room-details-1.html">
-                                    <img src="assets/images/pages/room/1.webp" width="420" height="310" alt="room card">
-                                </a>
-                            </div>
-                            <div class="room__price__tag">
-                                <span class="h6 d-block">120$</span>
-                            </div>
-                        </div>
-                        <div class="room__card__meta">
-                            <a href="room-details-1.html" class="room__card__title h5">Deluxe Room</a>
-                            <div class="room__card__meta__info">
-                                <span><i class="flaticon-construction"></i>35 sqm</span>
-                                <span><i class="flaticon-user"></i>5 Person</span>
-                            </div>
-                            <p class="font-sm">Our rooms offer a harmonious blend of comfort and elegance, designed to provide an exceptional stay for every guest.</p>
-                            <a href="room-details-1.html" class="room__card__link">Discover More</a>
+{{-- Loop through each room in the $rooms collection --}}
 
-                        </div>
-                    </div>
-                </div>
-                <!-- single room end -->
-                <!-- single room -->
-                <div class="col-xl-4 col-lg-6 col-md-6">
-                    <div class="room__card">
-                        <div class="room__card__top">
-                            <div class="room__card__image">
-                                <a href="room-details-1.html">
-                                    <img src="assets/images/pages/room/2.webp" width="420" height="310" alt="room card">
-                                </a>
-                            </div>
-                            <div class="room__price__tag">
-                                <span class="h6 d-block">140$</span>
-                            </div>
-                        </div>
-                        <div class="room__card__meta">
-                            <a href="room-details-1.html" class="room__card__title h5">Single Room</a>
-                            <div class="room__card__meta__info">
-                                <span><i class="flaticon-construction"></i>35 sqm</span>
-                                <span><i class="flaticon-user"></i>5 Person</span>
-                            </div>
-                            <p class="font-sm">Our rooms offer a harmonious blend of comfort and elegance, designed to provide an exceptional stay for every guest.</p>
-                            <a href="room-details-1.html" class="room__card__link">Discover More</a>
+<div class="rts__section pb-120">
+    <div class="container">  {{-- <-- Corrected: 'container' opens here --}}
+        <div class="row g-30">  {{-- <-- Corrected: 'row' opens here --}}
 
-                        </div>
-                    </div>
-                </div>
-                <!-- single room end -->
-                <!-- single room -->
-                <div class="col-xl-4 col-lg-6 col-md-6">
-                    <div class="room__card">
-                        <div class="room__card__top">
-                            <div class="room__card__image">
-                                <a href="room-details-1.html">
-                                    <img src="assets/images/pages/room/3.webp" width="420" height="310" alt="room card">
-                                </a>
-                            </div>
-                            <div class="room__price__tag">
-                                <span class="h6 d-block">150$</span>
-                            </div>
-                        </div>
-                        <div class="room__card__meta">
-                            <a href="room-details-1.html" class="room__card__title h5">Double Room</a>
-                            <div class="room__card__meta__info">
-                                <span><i class="flaticon-construction"></i>35 sqm</span>
-                                <span><i class="flaticon-user"></i>5 Person</span>
-                            </div>
-                            <p class="font-sm">Our rooms offer a harmonious blend of comfort and elegance, designed to provide an exceptional stay for every guest.</p>
-                            <a href="room-details-1.html" class="room__card__link">Discover More</a>
-
-                        </div>
-                    </div>
-                </div>
-                <!-- single room end -->
-                <!-- single room -->
-                <div class="col-xl-4 col-lg-6 col-md-6">
-                    <div class="room__card">
-                        <div class="room__card__top">
-                            <div class="room__card__image">
-                                <a href="room-details-1.html">
-                                    <img src="assets/images/pages/room/4.webp" width="420" height="310" alt="room card">
-                                </a>
-                            </div>
-                            <div class="room__price__tag">
-                                <span class="h6 d-block">122$</span>
-                            </div>
-                        </div>
-                        <div class="room__card__meta">
-                            <a href="room-details-1.html" class="room__card__title h5">Triple Room</a>
-                            <div class="room__card__meta__info">
-                                <span><i class="flaticon-construction"></i>35 sqm</span>
-                                <span><i class="flaticon-user"></i>5 Person</span>
-                            </div>
-                            <p class="font-sm">Our rooms offer a harmonious blend of comfort and elegance, designed to provide an exceptional stay for every guest.</p>
-                            <a href="room-details-1.html" class="room__card__link">Discover More</a>
-
-                        </div>
-                    </div>
-                </div>
-                <!-- single room end -->
-                <!-- single room -->
-                <div class="col-xl-4 col-lg-6 col-md-6">
-                    <div class="room__card">
-                        <div class="room__card__top">
-                            <div class="room__card__image">
-                                <a href="room-details-1.html">
-                                    <img src="assets/images/pages/room/5.webp" width="420" height="310" alt="room card">
-                                </a>
-                            </div>
-                            <div class="room__price__tag">
-                                <span class="h6 d-block">140$</span>
-                            </div>
-                        </div>
-                        <div class="room__card__meta">
-                            <a href="room-details-1.html" class="room__card__title h5">Connecting Rooms</a>
-                            <div class="room__card__meta__info">
-                                <span><i class="flaticon-construction"></i>35 sqm</span>
-                                <span><i class="flaticon-user"></i>5 Person</span>
-                            </div>
-                            <p class="font-sm">Our rooms offer a harmonious blend of comfort and elegance, designed to provide an exceptional stay for every guest.</p>
-                            <a href="room-details-1.html" class="room__card__link">Discover More</a>
-
-                        </div>
-                    </div>
-                </div>
-                <!-- single room end -->
-                <!-- single room -->
-                <div class="col-xl-4 col-lg-6 col-md-6">
-                    <div class="room__card">
-                        <div class="room__card__top">
-                            <div class="room__card__image">
-                                <a href="room-details-1.html">
-                                    <img src="assets/images/pages/room/6.webp" width="420" height="310" alt="room card">
-                                </a>
-                            </div>
-                            <div class="room__price__tag">
-                                <span class="h6 d-block">140$</span>
-                            </div>
-                        </div>
-                        <div class="room__card__meta">
-                            <a href="room-details-1.html" class="room__card__title h5">Accessible Room</a>
-                            <div class="room__card__meta__info">
-                                <span><i class="flaticon-construction"></i>35 sqm</span>
-                                <span><i class="flaticon-user"></i>5 Person</span>
-                            </div>
-                            <p class="font-sm">Our rooms offer a harmonious blend of comfort and elegance, designed to provide an exceptional stay for every guest.</p>
-                            <a href="room-details-1.html" class="room__card__link">Discover More</a>
-
-                        </div>
-                    </div>
-                </div>
-                <!-- single room end -->
+    @foreach ($rooms as $room)
+    <div class="col-xl-4 col-lg-6 col-md-6">
+    <div class="room__card">
+        <div class="room__card__top">
+            <div class="room__card__image">
+                <a href="room-details-1.html">
+                    {{-- Dynamic image path, ensuring 'asset()' helper is used --}}
+                    {{-- Using $loop->index + 1 assumes images are named 1.webp, 2.webp etc. --}}
+                    <img src="{{ asset('assets/images/pages/room/' . ($loop->index + 1) . '.webp') }}" width="420" height="310" alt="room card">
+                    {{-- If you have specific image paths in your database, replace this: --}}
+                    {{-- <img src="{{ asset($room->image_path) }}" width="420" height="310" alt="room card"> --}}
+                </a>
             </div>
-            <!-- row end -->
+            
+            <div class="room__price__tag">
+                {{-- Display the dynamic price --}}
+                <span class="h6 d-block">${{ number_format($room->display_price, 2) }}</span>
+            </div>
+        </div>
 
+        <div class="room__card__meta">
+            {{-- Display the dynamic room type/name --}}
+            <a href="room-details-1.html" class="room__card__title h5">{{ $room->room_name }}</a> {{-- Changed from $room->room_name if room_type is correct --}}
+            <div class="room__card__meta__info">
+                {{-- These are hardcoded in your original HTML, update if dynamic in DB --}}
+                <span><i class="flaticon-construction"></i>35 sqm</span>
+                <span><i class="flaticon-user"></i>5 Person</span>
+            </div>
+            <p class="font-sm">Our rooms offer a harmonious blend of comfort and elegance, designed to provide an exceptional stay for every guest.</p>
+            <a href="room-details-1.html" class="room__card__link">Discover More</a>
         </div>
     </div>
+</div>
+@endforeach
+</div> {{-- Close row g-30 --}}
+</div> {{-- Close container --}}
     <!-- single rooms end -->
-
-    <!-- Login  -->
- 
-    <div class="modal similar__modal fade " id="loginModal">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="max-content similar__form form__padding">
-                    <div class="d-flex mb-3 align-items-center justify-content-between">
-                        <h6 class="mb-0">Login To Moonlit</h6>
-                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close">
-                        </button>
-                    </div>
-                    <form action="candidate-dashboard.html" method="post" class="d-flex flex-column gap-3">
-                        <div class="form-group">
-                            <label for="email-popup" class="text-dark mb-3">Your Email</label>
-                            <div class="position-relative">
-                                <input type="email" name="email-popup" id="email-popup" placeholder="Enter your email" required>
-
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="password" class="text-dark mb-3">Password</label>
-                            <div class="position-relative">
-                                <input type="password" name="password" id="password" placeholder="Enter your password" required>
-
-                            </div>
-                        </div>
-                        <div class="d-flex flex-wrap justify-content-between align-items-center ">
-                            <div class="form-check d-flex align-items-center gap-2">
-                                <input class="form-check-input mt-0" type="checkbox" value="" id="flexCheckDefault">
-                                <label class="form-check-label mb-0" for="flexCheckDefault">
-                                    Remember me
-                                </label>
-                            </div>
-                            <a href="#" class="forgot__password text-para" data-bs-toggle="modal" data-bs-target="#forgotModal">Forgot Password?</a>
-                        </div>
-                        <div class="form-group my-3">
-                            <button class="theme-btn btn-style sm-btn fill w-100"><span>Login</span></button>
-                        </div>
-                    </form>
-                    <div class="d-block has__line text-center">
-                        <p>Or</p>
-                    </div>
-                    <div class="d-flex gap-4 flex-wrap justify-content-center mt-20 mb-20">
-                        <div class="is__social google">
-                            <button class="theme-btn btn-style sm-btn"><span>Continue with Google</span></button>
-                        </div>
-                        <div class="is__social facebook">
-                            <button class="theme-btn btn-style sm-btn"><span>Continue with Facebook</span></button>
-                        </div>
-                    </div>
-                    <span class="d-block text-center ">Don`t have an account? <a href="#" data-bs-target="#signupModal" data-bs-toggle="modal" class="text-primary">Sign Up</a> </span>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- signup form -->
     <div class="modal similar__modal fade " id="signupModal">

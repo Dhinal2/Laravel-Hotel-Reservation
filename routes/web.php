@@ -44,3 +44,5 @@ Route::get('/contact', function () {
     return view('contact'); 
 });
 
+//Get urban red prices route
+Route::get('/urban-redrooms', [PageController::class, 'urbanRedRooms'])->name('urban_red_rooms');

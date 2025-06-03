@@ -16,9 +16,11 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'password' => 'Hippo@123#',
+            'name' => 'Test Guest',
+            'email' => 'guest@gmail.com',
+            'password' => bcrypt('Guest123#'), // Hashed password
         ]);
+
+        $this->call(RoomSeeder::class);
     }
 }

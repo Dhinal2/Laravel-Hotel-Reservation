@@ -13,7 +13,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Hotel and Resort">
     <meta name="twitter:description" content="Urban Hotel - Hotel and Resort">
-    <link rel="icon" href="{{ asset('public/assets/images/favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('assets/images/favicon.ico') }}" type="image/x-icon">
     <title>@yield('title', 'Urban Hotel - Hotel and Restaurant')</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Gilda+Display&family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -139,21 +139,17 @@
     {{-- The dynamic content of each page will be injected here --}}
     @yield('content')
 
-    {{-- Footed Section --}}
-    <footer>
-        <p style="text-align: center; padding: 20px;">&copy; {{ date('Y') }} Urban Hotels. All Rights Reserved.</p>
-    </footer>
  <!-- footer style one -->
  <footer class="rts__section rts__footer is__common__footer footer__background has__shape">
     <div class="section__shape">
         <div class="shape__1">
-            <img src="assets/images/footer/shape-1.svg" alt="">
+            <img src="{{ asset('assets/images/footer/shape-1.svg') }}" alt="">
         </div>
         <div class="shape__2">
-            <img src="assets/images/footer/shape-2.svg" alt="">
+            <img src="{{ asset('assets/images/footer/shape-2.svg') }}" alt="">
         </div>
         <div class="shape__3">
-            <img src="assets/images/footer/shape-3.svg" alt="">
+            <img src="{{ asset('assets/images/footer/shape-3.svg') }}" alt="">
         </div>
     </div>
     <div class="container">
@@ -171,7 +167,7 @@
         <div class="row">
             <div class="footer__widget__wrapper">
                 <div class="rts__widget">
-                    <a href="index.html"><img class="footer__logo" src="assets/images/logo/logo.svg" alt="footer logo"></a>
+                    <a href="{{ url('/') }}"><img class="footer__logo" src="{{ asset('assets/images/logo/logo.svg') }}" alt="footer logo"></a>
                     <p class="font-sm max-290 mt-20">
                         Each room features plush bedding, high-quality linens, and a selection of ensure a restful night's sleep.
                     </p>
@@ -299,6 +295,7 @@
     <script src="{{ asset('assets/js/gdpr.js') }}"></script> 
     <script src="{{ asset('assets/js/plugins.min.js') }}"></script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/swiper-bundle.min.js') }}"></script>
     
     {{-- Optional: For page-specific JS that you push from individual views --}}
     @stack('scripts')
