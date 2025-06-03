@@ -3,8 +3,7 @@
 @section('title', 'Urban Hotels - Luxury Hotel & Resort') {{-- Sets the title for this specific page --}}
 
 @section('content')
-     <!-- page header -->
-     <div class="rts__section page__hero__height page__hero__bg" style="background-image: url({{ asset('assets/images/pages/header__bg.webp') }});">
+    <div class="rts__section page__hero__height page__hero__bg" style="background-image: url({{ asset('assets/images/pages/header__bg.webp') }});">
         <div class="container">
             <div class="row align-items-center justify-content-center">
                 <div class="col-lg-12">
@@ -16,15 +15,11 @@
             </div>
         </div>
     </div>
-    <!-- page header end -->
-
-    <!-- advance search -->
     <div class="rts__section advance__search__section is__page has__border pt-120 pb-60">
         <div class="container">
             <div class="row">
                 <form action="room-two.html" method="post" class="advance__search">
                     <div class="advance__search__wrapper wow fadeInUp">
-                        <!-- single input -->
                         <div class="query__input">
                             <label for="check__in" class="query__label">Check In</label>
                             <input type="text" id="check__in" name="check__in" placeholder="15 Jun 2024" required>
@@ -32,9 +27,6 @@
                                 <i class="flaticon-calendar"></i>
                             </div>
                         </div>
-                        <!-- single input end -->
-
-                        <!-- single input -->
                         <div class="query__input">
                             <label for="check__out" class="query__label">Check Out</label>
                             <input type="text" id="check__out" name="check__out" placeholder="15 May 2024" required>
@@ -42,9 +34,6 @@
                                 <i class="flaticon-calendar"></i>
                             </div>
                         </div>
-                        <!-- single input end -->
-
-                        <!-- single input -->
                         <div class="query__input">
                             <label for="adult" class="query__label ">Adult</label>
                             <select name="adult" id="adult" class="form-select">
@@ -62,9 +51,6 @@
                                 <i class="flaticon-user"></i>
                             </div>
                         </div>
-                        <!-- single input end -->
-
-                        <!-- single input -->
                         <div class="query__input">
                             <label for="child" class="query__label ">Child</label>
                             <select name="child" id="child" class="form-select">
@@ -82,149 +68,55 @@
                                 <i class="flaticon-user"></i>
                             </div>
                         </div>
-                        <!-- single input end -->
-
-                        <!-- submit button -->
                         <button class="theme-btn btn-style fill no-border search__btn">
                             <span>Check Now</span>
                         </button>
-                        <!-- submit button end -->
-                    </div>
+                        </div>
                 </form>
             </div>
         </div>
     </div>
-    <!-- advance search end -->
+    <div class="rts__section pb-120">
+        <div class="container">
+            <div class="row g-30">
 
-    <!-- single rooms -->
-{{-- Loop through each room in the $rooms collection --}}
+            @foreach ($rooms as $room)
+                <div class="col-xl-4 col-lg-6 col-md-6">
+                    <div class="room__card">
+                        <div class="room__card__top">
+                            <div class="room__card__image">
+                                {{-- CORRECTED: Added <a> tag around the image --}}
+                                <a href="{{ route('room.show', $room->id) }}">
+                                    {{-- Dynamic image path, ensuring 'asset()' helper is used --}}
+                                    {{-- Using $loop->index + 1 assumes images are named 1.webp, 2.webp etc. --}}
+                                    <img src="{{ asset('assets/images/pages/room/' . ($loop->index + 1) . '.webp') }}" width="420" height="310" alt="room card">
+                                    {{-- If you have specific image paths in your database, replace this with: --}}
+                                    {{-- <img src="{{ asset($room->image_path) }}" width="420" height="310" alt="room card"> --}}
+                                </a>
+                            </div>
 
-<div class="rts__section pb-120">
-    <div class="container">  {{-- <-- Corrected: 'container' opens here --}}
-        <div class="row g-30">  {{-- <-- Corrected: 'row' opens here --}}
-
-    @foreach ($rooms as $room)
-    <div class="col-xl-4 col-lg-6 col-md-6">
-    <div class="room__card">
-        <div class="room__card__top">
-            <div class="room__card__image">
-                href="{{ route('room.show', $room->id) }}"
-                    {{-- Dynamic image path, ensuring 'asset()' helper is used --}}
-                    {{-- Using $loop->index + 1 assumes images are named 1.webp, 2.webp etc. --}}
-                    <img src="{{ asset('assets/images/pages/room/' . ($loop->index + 1) . '.webp') }}" width="420" height="310" alt="room card">
-                    {{-- If you have specific image paths in your database, replace this: --}}
-                    {{-- <img src="{{ asset($room->image_path) }}" width="420" height="310" alt="room card"> --}}
-                </a>
-            </div>
-            
-            <div class="room__price__tag">
-                {{-- Display the dynamic price --}}
-                <span class="h6 d-block">${{ number_format($room->display_price, 2) }}</span>
-            </div>
-        </div>
-
-        <div class="room__card__meta">
-            {{-- Display the dynamic room type/name --}}
-            <a href="{{ route('room.show', $room->id) }}" class="room__card__title h5">{{ $room->room_name }}</a> {{-- Changed from $room->room_name if room_type is correct --}}
-            <div class="room__card__meta__info">
-                {{-- These are hardcoded in your original HTML, update if dynamic in DB --}}
-                <span><i class="flaticon-construction"></i>35 sqm</span>
-                <span><i class="flaticon-user"></i>5 Person</span>
-            </div>
-            <p class="font-sm">Our rooms offer a harmonious blend of comfort and elegance, designed to provide an exceptional stay for every guest.</p>
-            <a href="room-details-1.html" class="room__card__link">Discover More</a>
-        </div>
-    </div>
-</div>
-@endforeach
-</div> {{-- Close row g-30 --}}
-</div> {{-- Close container --}}
-    <!-- single rooms end -->
-
-    <!-- signup form -->
-    <div class="modal similar__modal fade " id="signupModal">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="max-content similar__form form__padding">
-                    <div class="d-flex mb-3 align-items-center justify-content-between">
-                        <h6 class="mb-0">Create A Free Account</h6>
-                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close">
-                        </button>
-                    </div>
-
-                    <form action="#" class="d-flex flex-column gap-3">
-                        <div class="form-group">
-                            <label for="sname" class=" text-dark mb-3">Your Name</label>
-                            <div class="position-relative">
-                                <input type="text" name="sname" id="sname" placeholder="Candidate" required>
-                                <i class="fa-light fa-user icon"></i>
+                            <div class="room__price__tag">
+                                {{-- Display the dynamic price --}}
+                                <span class="h6 d-block">${{ number_format($room->display_price, 2) }}</span>
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="signemail" class=" text-dark mb-3">Your Email</label>
-                            <div class="position-relative">
-                                <input type="email" name="signemail" id="signemail" placeholder="Enter your email" required>
-                                <i class="fa-sharp fa-light fa-envelope icon"></i>
+                        <div class="room__card__meta">
+                            {{-- Display the dynamic room type/name --}}
+                            <a href="{{ route('room.show', $room->id) }}" class="room__card__title h5">{{ $room->room_name }}</a> {{-- Assuming 'room_name' is the correct attribute --}}
+                            <div class="room__card__meta__info">
+                                {{-- These are hardcoded in your original HTML, update if dynamic in DB --}}
+                                <span><i class="flaticon-construction"></i>35 sqm</span>
+                                <span><i class="flaticon-user"></i>5 Person</span>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="spassword" class=" text-dark mb-3">Password</label>
-                            <div class="position-relative">
-                                <input type="password" name="spassword" id="spassword" placeholder="Enter your password" required>
-                                <i class="fa-light fa-lock icon"></i>
-                            </div>
-                        </div>
-
-                        <div class="form-group my-3">
-                            <button class="theme-btn btn-style sm-btn fill w-100"><span>Register</span></button>
-                        </div>
-                    </form>
-                    <div class="d-block has__line text-center">
-                        <p>Or</p>
-                    </div>
-                    <div class="d-flex flex-wrap justify-content-center gap-4 mt-20 mb-20">
-                        <div class="is__social google">
-                            <button class="theme-btn btn-style sm-btn"><span>Continue with Google</span></button>
-                        </div>
-                        <div class="is__social facebook">
-                            <button class="theme-btn btn-style sm-btn"><span>Continue with Facebook</span></button>
+                            <p class="font-sm">Our rooms offer a harmonious blend of comfort and elegance, designed to provide an exceptional stay for every guest.</p>
+                            {{-- CORRECTED: Changed to a Laravel route --}}
+                            <a href="{{ route('room.show', $room->id) }}" class="room__card__link">Discover More</a>
                         </div>
                     </div>
-                    <span class="d-block text-center ">Have an account? <a href="#" data-bs-target="#loginModal" data-bs-toggle="modal" class="text-primary">Login</a> </span>
                 </div>
-            </div>
-        </div>
+            @endforeach
+            </div> {{-- Close row g-30 --}}
+        </div> {{-- Close container --}}
     </div>
-
-    <!-- forgot password form -->
-    <div class="modal similar__modal fade " id="forgotModal">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="max-content similar__form form__padding">
-                    <div class="d-flex mb-3 align-items-center justify-content-between">
-                        <h6 class="mb-0">Forgot Password</h6>
-                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close">
-                        </button>
-                    </div>
-                    <form action="#" class="d-flex flex-column gap-3">
-                        <div class="form-group">
-                            <label for="fmail" class=" text-dark mb-3">Your Email</label>
-                            <div class="position-relative">
-                                <input type="email" name="email" id="fmail" placeholder="Enter your email" required>
-                                <i class="fa-sharp fa-light fa-envelope icon"></i>
-                            </div>
-                        </div>
-                        <div class="form-group my-3">
-                            <button class="theme-btn btn-style sm-btn fill w-100"><span>Reset Password</span></button>
-                        </div>
-                    </form>
-
-                    <span class="d-block text-center ">Remember Your Password? 
-                <a href="#" data-bs-target="#loginModal" data-bs-toggle="modal" class="text-primary">Login</a> </span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-@endsection
+    @endsection

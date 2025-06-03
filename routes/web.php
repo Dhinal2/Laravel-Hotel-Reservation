@@ -5,6 +5,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\TravelAgentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CheckoutController;
 
 
 require __DIR__.'/auth.php';
@@ -49,3 +50,6 @@ Route::get('/urban-redrooms', [PageController::class, 'urbanRedRooms'])->name('u
 
 //Room details get
 Route::get('/room-details/{room}', [PageController::class, 'showRoomDetails'])->name('room.show');
+
+//Route for checkout
+Route::get('/checkout/{roomid}', [CheckoutController::class, 'index'])->name('checkout');

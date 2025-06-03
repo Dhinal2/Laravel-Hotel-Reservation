@@ -241,9 +241,12 @@
                                     <span class="price h6 m-0" id="calculated_price">$0</span>
                                 </div>
     
-                                <button type="submit" class="theme-btn btn-style fill no-border search__btn wow fadeInUp" data-wow-delay=".6s">
+                                <a href="{{ route('checkout', ['roomid' => $room->id]) }}" class="theme-btn btn-style fill no-border search__btn wow fadeInUp" data-wow-delay=".6s">
                                     <span>Book Your Room</span>
-                                </button>
+                                </a>
+
+                            {{--Logic Part for booking  --}}
+                            
                             </div>
                         </form>
                     </div>

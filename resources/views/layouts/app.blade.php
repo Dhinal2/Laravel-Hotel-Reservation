@@ -23,11 +23,14 @@
     {{-- IMPORTANT: Check your public/assets/css/plugins/ folder for the exact filename.
                    It might be 'b-bootstrap.min.css' or 'bootstrap.min.css'.
                    Use the correct name here. --}}
-    <link rel="stylesheet" href="{{ asset('assets/css/plugins/b-bootstrap.min.css') }}"> 
+    <link rel="stylesheet" href="{{ asset('assets/css/plugins/bootstrap.min.css') }}"> 
 
     {{-- Your other local CSS files (must load AFTER Bootstrap for overrides) --}}
     <link rel="stylesheet" href="{{ asset('assets/css/plugins.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+
+    {{-- ADD THIS LINE: Link to your checkout-specific CSS file --}}
+    <link rel="stylesheet" href="{{ asset('assets/css/checkout.css') }}"> 
 
     {{-- Optional: For page-specific CSS that you push from individual views --}}
     @stack('styles')
