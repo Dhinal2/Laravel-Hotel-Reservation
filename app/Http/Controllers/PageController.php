@@ -10,12 +10,16 @@ use Illuminate\Contracts\View\View;
 class PageController extends Controller
 {
 
-// Home Controller - This typically returns your main landing page without specific room data
-public function home()
-{
-    return view('home');
-}
+ // Home Controller - This typically returns your main landing page with room data
+ public function home()
+ {
+     // Fetch all rooms from the database
+     $rooms = Room::all(); // You can add orderBy, take, where clauses as needed
 
+     // Pass the $rooms data to the 'home' view
+     return view('home', compact('rooms'));
+ }
+ 
 // This method should be for displaying rooms on your main 'home' page (e.g., Urban Blue or a general room listing)
 // I've renamed it to urbanBlueRooms based on our previous discussion for clarity
 public function urbanBlueRooms(): View

@@ -36,9 +36,7 @@ Route::middleware(['auth', 'usertype:travel_agent'])->group(function () {
     Route::get('/travel-agent/home', [TravelAgentController::class, 'home'])->name('travel_agent.home');
 });
 
-Route::get('/', function () {
-    return view('home'); // This will load resources/views/home.blade.php
-});
+Route::get('/', [PageController::class, 'home'])->name('home');
 
 Route::get('/contact', function () {
     return view('contact'); 

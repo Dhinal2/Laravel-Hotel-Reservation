@@ -232,7 +232,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="row g-4 wow fadeInUp" data-wow-delay=".5s">
                 <div class="col-xl-3 col-lg-6 col-md-6">
                     <div class="card rts__card no-border is__home radius-6">
@@ -298,111 +297,44 @@
                 </div>
             </div>
         </div>
-        <!-- row end -->
         <div class="row">
             <div class="main__room__slider overflow-hidden wow fadeInUp" data-wow-delay=".5s">
                 <div class="swiper-wrapper">
-                    <!-- single room slider -->
-                    <div class="swiper-slide">
-                        <div class="room__slide__box radius-6">
-                            <div class="room__thumbnail jara-mask-2 jarallax">
-                                <img height="585" width="420" class="radius-6 jarallax-img" src="assets/images/room/1.webp" alt="">
-                            </div>
-                            <div class="room__content">
-                                <a href="room-details-1.html" class="room__title">
-                                    <h5>The Ritz-Carlton</h5>
-                                </a>
-                                <div class="room__content__meta">
-                                    <span><i class="flaticon-construction"></i> 35 sqm</span>
-                                    <span><i class="flaticon-user"></i>2 Person</span>
+                    {{-- Loop through each room in the $rooms collection --}}
+                    @foreach ($rooms as $room)
+                        <div class="swiper-slide">
+                            <div class="room__slide__box radius-6">
+                                <div class="room__thumbnail jara-mask-2 jarallax">
+                                    {{-- Dynamic image path using asset() and $loop->index for unique images --}}
+                                    <img height="585" width="420" class="radius-6 jarallax-img"
+                                         src="{{ asset('assets/images/room/' . ($loop->index + 1) . '.webp') }}" alt="room image">
+                                    {{-- IMPORTANT: Check the original image path. If it was 'assets/images/room/1.webp', then keep 'assets/images/room/'. --}}
+                                    {{-- If it was 'assets/images/pages/room/', adjust accordingly. --}}
                                 </div>
-                                <span class="h4 rent mb-0 mt-15 d-block">100$</span>
+                                <div class="room__content">
+                                    {{-- Dynamic room type --}}
+                                    <a href="room-details-1.html" class="room__title">
+                                        <h5>{{ $room->room_name }}</h5> {{-- Assuming 'room_type' is the correct attribute --}}
+                                    </a>
+                                    <div class="room__content__meta">
+                                        {{-- These are hardcoded in the original, update if dynamic from DB --}}
+                                        <span><i class="flaticon-construction"></i> 35 sqm</span>
+                                        <span><i class="flaticon-user"></i>2 Person</span>
+                                    </div>
+                                    {{-- Dynamic price --}}
+                                    <span class="h4 rent mb-0 mt-15 d-block">${{ number_format($room->room_rate, 2) }}</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- single room slider end -->
-
-                    <!-- single room slider -->
-                    <div class="swiper-slide">
-                        <div class="room__slide__box radius-6">
-                            <div class="room__thumbnail jara-mask-2 jarallax">
-                                <img height="585" width="420" class="radius-6 jarallax-img" src="assets/images/room/2.webp" alt="">
-                            </div>
-                            <div class="room__content">
-                                <a href="room-details-1.html" class="room__title">
-                                    <h5>Four Seasons Hotels</h5>
-                                </a>
-                                <div class="room__content__meta">
-                                    <span><i class="flaticon-construction"></i>35 sqm</span>
-                                    <span><i class="flaticon-user"></i>2 Person</span>
-                                </div>
-                                <span class="h4 rent mb-0 mt-15 d-block">130$</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- single room slider end -->
-
-                    <!-- single room slider -->
-                    <div class="swiper-slide">
-                        <div class="room__slide__box radius-6">
-                            <div class="room__thumbnail jara-mask-2 jarallax">
-                                <img height="585" width="420" class="radius-6 jarallax-img" src="assets/images/room/3.webp" alt="">
-                            </div>
-                            <div class="room__content">
-                                <a href="room-details-1.html" class="room__title">
-                                    <h5>Waldorf Astoria Hotels</h5>
-                                </a>
-                                <div class="room__content__meta">
-                                    <span><i class="flaticon-construction"></i>35 sqm</span>
-                                    <span><i class="flaticon-user"></i>5 Person</span>
-                                </div>
-                                <span class="h4 rent mb-0 mt-15 d-block">150$</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- single room slider end -->
-
-                    <!-- single room slider -->
-                    <div class="swiper-slide">
-                        <div class="room__slide__box radius-6">
-                            <div class="room__thumbnail jara-mask-2 jarallax">
-                                <img height="585" width="420" class="radius-6 jarallax-img" src="assets/images/room/4.webp" alt="">
-                            </div>
-                            <div class="room__content">
-                                <a href="room-details-1.html" class="room__title">
-                                    <h5>Waldorf Astoria Hotels</h5>
-                                </a>
-                                <div class="room__content__meta">
-                                    <span><i class="flaticon-construction"></i>35 sqm</span>
-                                    <span><i class="flaticon-user"></i>5 Person</span>
-                                </div>
-                                <span class="h4 rent mb-0 mt-15 d-block">150$</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- single room slider end -->
-
-                    <!-- single room slider -->
-                    <div class="swiper-slide">
-                        <div class="room__slide__box radius-6">
-                            <div class="room__thumbnail jara-mask-2 jarallax">
-                                <img height="585" width="420" class="radius-6 jarallax-img" src="assets/images/room/1.webp" alt="">
-                            </div>
-                            <div class="room__content">
-                                <a href="room-details-1.html" class="room__title">
-                                    <h5>Waldorf Astoria Hotels</h5>
-                                </a>
-                                <div class="room__content__meta">
-                                    <span><i class="flaticon-construction"></i>35 sqm</span>
-                                    <span><i class="flaticon-user"></i>5 Person</span>
-                                </div>
-                                <span class="h4 rent mb-0 mt-15 d-block">150$</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- single room slider end -->
+                        @endforeach
                 </div>
+                {{-- If your original slider had navigation arrows or pagination dots, they would go here --}}
+                {{-- <div class="swiper-button-next"></div> --}}
+                {{-- <div class="swiper-button-prev"></div> --}}
+                {{-- <div class="swiper-pagination"></div> --}}
             </div>
+        </div>
+    </div>
 
             <!-- pagination button -->
             <div class="rts__pagination">
