@@ -1,10 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\TravelAgentController;
+use App\Http\Controllers\ProfileController;
+
 
 require __DIR__.'/auth.php';
 
@@ -44,3 +45,7 @@ Route::get('/contact', function () {
 
 //Get urban red prices route
 Route::get('/urban-redrooms', [PageController::class, 'urbanRedRooms'])->name('urban_red_rooms');
+
+
+//Room details get
+Route::get('/room-details/{room}', [PageController::class, 'showRoomDetails'])->name('room.show');

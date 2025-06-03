@@ -25,20 +25,28 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
+        $request->authenticate(); // This authenticates the user
 
-        $request->session()->regenerate();
+        $request->session()->regenerate(); // Regenerates the session ID
 
+        // --- START CUSTOM REDIRECTION LOGIC ---
         $user = Auth::user(); // Get the authenticated user
 
-        // Conditional redirection based on user role
-        if ($user->role === 'admin') {
-            return redirect()->intended('/admin/dashboard');
-        } elseif ($user->role === 'travel_agent') {
-            return redirect()->intended('/travel-agent/home');
-        } else {
-            // For 'individual' or any other role, redirect to the main homepage
-            return redirect()->intended('/'); // Or RouteServiceProvider::HOME if you want a different default
+        //dd($user->role);
+
+        switch ($user->role) {
+            case 'admin':
+                return redirect()->intended('/admin/dashboard'); // Redirect admin
+                break;
+            case 'travel_agent':
+                return redirect()->intended('/travel-agent/home'); // Redirect travel agent
+                break;
+            case 'individual':
+                return redirect()->intended('/'); // Redirect individual to home page
+                break;
+            default:
+                return redirect()->intended('/'); // Fallback for other roles or unset role
+                break;
         }
     }
 

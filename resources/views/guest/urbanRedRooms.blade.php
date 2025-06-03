@@ -108,7 +108,7 @@
     <div class="room__card">
         <div class="room__card__top">
             <div class="room__card__image">
-                <a href="room-details-1.html">
+                href="{{ route('room.show', $room->id) }}"
                     {{-- Dynamic image path, ensuring 'asset()' helper is used --}}
                     {{-- Using $loop->index + 1 assumes images are named 1.webp, 2.webp etc. --}}
                     <img src="{{ asset('assets/images/pages/room/' . ($loop->index + 1) . '.webp') }}" width="420" height="310" alt="room card">
@@ -125,7 +125,7 @@
 
         <div class="room__card__meta">
             {{-- Display the dynamic room type/name --}}
-            <a href="room-details-1.html" class="room__card__title h5">{{ $room->room_name }}</a> {{-- Changed from $room->room_name if room_type is correct --}}
+            <a href="{{ route('room.show', $room->id) }}" class="room__card__title h5">{{ $room->room_name }}</a> {{-- Changed from $room->room_name if room_type is correct --}}
             <div class="room__card__meta__info">
                 {{-- These are hardcoded in your original HTML, update if dynamic in DB --}}
                 <span><i class="flaticon-construction"></i>35 sqm</span>

@@ -18,6 +18,14 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Gilda+Display&family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/fonts/flaticon_bokinn.css') }}">
+
+    {{-- YOUR THEME'S LOCAL BOOTSTRAP CSS --}}
+    {{-- IMPORTANT: Check your public/assets/css/plugins/ folder for the exact filename.
+                   It might be 'b-bootstrap.min.css' or 'bootstrap.min.css'.
+                   Use the correct name here. --}}
+    <link rel="stylesheet" href="{{ asset('assets/css/plugins/b-bootstrap.min.css') }}"> 
+
+    {{-- Your other local CSS files (must load AFTER Bootstrap for overrides) --}}
     <link rel="stylesheet" href="{{ asset('assets/css/plugins.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 
@@ -107,29 +115,39 @@
                     
                         @auth
                             {{-- Display content ONLY if the user IS logged in --}}
-                            @if (Auth::user()->role === 'admin')
-                                {{-- Link for Admin users --}}
-                                <a href="{{ route('admin.index') }}" class="theme-btn btn-style sm-btn fill d-none d-lg-block"><span>Admin Dashboard</span></a>
-                            @elseif (Auth::user()->role === 'travel_agent')
-                                {{-- Link for Travel Agent users --}}
-                                <a href="{{ route('travel_agent.home') }}" class="theme-btn btn-style sm-btn fill d-none d-lg-block"><span>Agent Portal</span></a>
-                            @else {{-- This covers 'individual' users and any other roles not explicitly handled --}}
-                                {{-- Link for Individual users (e.g., to their profile or a general user dashboard) --}}
-                                <a href="{{ url('/') }}" class="theme-btn btn-style sm-btn fill d-none d-lg-block"><span>My Profile</span></a>
-                            @endif
+                            <div class="dropdown">
+                                <button class="theme-btn btn-style sm-btn fill d-none d-lg-block dropdown-toggle" type="button" id="userMenuDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span>{{ Auth::user()->name }}</span> {{-- Display the logged-in user's name --}}
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenuDropdown">
+                                    {{-- Common links for all logged-in users --}}
+                                    <li><a class="dropdown-item" href="{{ url('/reservations') }}">Reservations</a></li> {{-- You'll need to create this route --}}
+                                    <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Profile</a></li> {{-- Breeze's default profile route --}}
                     
-                            {{-- Add a Logout button that is visible when any user is logged in --}}
-                            <form action="{{ route('logout') }}" method="POST" style="display: inline;">
-                                @csrf {{-- CSRF token for security --}}
-                                <button type="submit" class="theme-btn btn-style sm-btn border d-none d-lg-block"><span>Logout</span></button>
-                            </form>
+                                    {{-- Role-specific links --}}
+                                    @if (Auth::user()->role === 'admin')
+                                        <li><a class="dropdown-item" href="{{ route('admin.index') }}">Admin Dashboard</a></li>
+                                    @elseif (Auth::user()->role === 'travel_agent')
+                                        <li><a class="dropdown-item" href="{{ route('travel_agent.home') }}">Agent Portal</a></li>
+                                    @endif
+                    
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        {{-- Logout Form --}}
+                                        <form method="POST" action="{{ route('logout') }}">
+                                            @csrf
+                                            <button type="submit" class="dropdown-item">Logout</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
                         @endauth
                     
-                        {{-- The Book Now button and Mobile Menu button remain for all states --}}
-                        <a href="{{ url('/room-details-1') }}" class="theme-btn btn-style sm-btn fill"><span>Book Now</span></a>
-                        <button class="theme-btn btn-style sm-btn fill menu__btn d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                            <span><img src="{{ asset('assets/images/icon/menu-icon.svg') }}" alt=""></span>
-                        </button>
+                    {{-- SignUp as Travel_Agency --}}
+                    <a href="#" class="theme-btn btn-style sm-btn fill" data-bs-toggle="modal" data-bs-target="#travelAgentSignupModal"><span>Travel Agency Sign-Up</span></a>
+                    <button class="theme-btn btn-style sm-btn fill menu__btn d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                        <span><img src="{{ asset('assets/images/icon/menu-icon.svg') }}" alt=""></span>
+                    </button>
                     </div>
                 </div>
             </div>
@@ -228,7 +246,7 @@
 </button>
 <!-- back to top end -->
 
-
+<!-- Guest Login Model -->
 <div class="modal similar__modal fade " id="loginModal">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -279,6 +297,112 @@
     </div>
 </div>
 
+{{-- Travel Agency Signup --}}
+<div class="modal similar__modal fade" id="travelAgentSignupModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="max-content similar__form form__padding">
+                <div class="d-flex mb-3 align-items-center justify-content-between">
+                    <h6 class="mb-0">Register as Travel Agent</h6>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                {{-- Form action points to Laravel's default registration route --}}
+                <form action="{{ route('register') }}" method="post" class="d-flex flex-column gap-3">
+                    @csrf
+                    {{-- HIDDEN INPUT TO SPECIFY ROLE --}}
+                    <input type="hidden" name="role" value="travel_agent">
+
+                    <div class="form-group">
+                        <label for="name-popup" class="text-dark mb-3">Your Name</label>
+                        <div class="position-relative">
+                            <input type="text" name="name" id="name-popup" placeholder="Enter your name" required autofocus autocomplete="name">
+                            {{-- Add error display for name if needed --}}
+                            @error('name')
+                                <div class="text-danger mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email-signup-popup" class="text-dark mb-3">Your Email</label>
+                        <div class="position-relative">
+                            <input type="email" name="email" id="email-signup-popup" placeholder="Enter your email" required autocomplete="email">
+                            {{-- Add error display for email if needed --}}
+                            @error('email')
+                                <div class="text-danger mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password-signup-popup" class="text-dark mb-3">Password</label>
+                        <div class="position-relative">
+                            <input type="password" name="password" id="password-signup-popup" placeholder="Enter your password" required autocomplete="new-password">
+                            {{-- Add error display for password if needed --}}
+                            @error('password')
+                                <div class="text-danger mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password-confirmation-popup" class="text-dark mb-3">Confirm Password</label>
+                        <div class="position-relative">
+                            <input type="password" name="password_confirmation" id="password-confirmation-popup" placeholder="Confirm your password" required autocomplete="new-password">
+                        </div>
+                    </div>
+
+                    <div class="form-group my-3">
+                        <button type="submit" class="theme-btn btn-style sm-btn fill w-100"><span>Register as Agent</span></button>
+                    </div>
+                </form>
+                <div class="d-block has__line text-center">
+                    <p>Or</p>
+                </div>
+                <div class="d-flex gap-4 flex-wrap justify-content-center mt-20 mb-20">
+                    <div class="is__social google">
+                        <button class="theme-btn btn-style sm-btn"><span>Continue with Google</span></button>
+                    </div>
+                    <div class="is__social facebook">
+                        <button class="theme-btn btn-style sm-btn"><span>Continue with Facebook</span></button>
+                    </div>
+                </div>
+                <span class="d-block text-center ">Already have an account? <a href="#" data-bs-target="#loginModal" data-bs-toggle="modal" class="text-primary">Sign In</a> </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+   <!-- forgot password form -->
+   <div class="modal similar__modal fade " id="forgotModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="max-content similar__form form__padding">
+                <div class="d-flex mb-3 align-items-center justify-content-between">
+                    <h6 class="mb-0">Forgot Password</h6>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+                <form action="#" class="d-flex flex-column gap-3">
+                    <div class="form-group">
+                        <label for="fmail" class=" text-dark mb-3">Your Email</label>
+                        <div class="position-relative">
+                            <input type="email" name="email" id="fmail" placeholder="Enter your email" required>
+                            <i class="fa-sharp fa-light fa-envelope icon"></i>
+                        </div>
+                    </div>
+                    <div class="form-group my-3">
+                        <button class="theme-btn btn-style sm-btn fill w-100"><span>Reset Password</span></button>
+                    </div>
+                </form>
+
+                <span class="d-block text-center ">Remember Your Password? 
+            <a href="#" data-bs-target="#loginModal" data-bs-toggle="modal" class="text-primary">Login</a> </span>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- THEME PRELOADER START -->
 <div class="loader-wrapper">
@@ -291,11 +415,11 @@
 
 
     <script src="{{ asset('assets/js/plugins/a-jquery.min.js') }}"></script>
-    <script src="{{ asset('assets/js/plugins/b-bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/c-popper.js') }}"></script>
     <script src="{{ asset('assets/js/gdpr.js') }}"></script> 
     <script src="{{ asset('assets/js/plugins.min.js') }}"></script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
-    <script src="{{ asset('assets/js/plugins/swiper-bundle.min.js') }}"></script>
+
     
     {{-- Optional: For page-specific JS that you push from individual views --}}
     @stack('scripts')

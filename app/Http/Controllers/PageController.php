@@ -12,14 +12,23 @@ class PageController extends Controller
 
  // Home Controller - This typically returns your main landing page with room data
  public function home()
- {
+    {
      // Fetch all rooms from the database
      $rooms = Room::all(); // You can add orderBy, take, where clauses as needed
 
      // Pass the $rooms data to the 'home' view
      return view('home', compact('rooms'));
- }
- 
+    }
+
+    // New method to show individual room details
+    // Laravel's Route Model Binding will automatically fetch the Room based on the ID from the URL
+    public function showRoomDetails(Room $room) // Type-hinting "Room $room" is important!
+    {
+        // The $room variable now contains the specific Room model instance
+        // that matches the ID in the URL. If not found, it automatically throws a 404.
+        return view('guest.roomDetails', compact('room')); // Laravel uses dot notation for subdirectories
+    }
+
 // This method should be for displaying rooms on your main 'home' page (e.g., Urban Blue or a general room listing)
 // I've renamed it to urbanBlueRooms based on our previous discussion for clarity
 public function urbanBlueRooms(): View

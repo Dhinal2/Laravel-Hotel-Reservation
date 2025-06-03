@@ -33,18 +33,35 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            // No validation for 'role' here as it's a hidden field we control
         ]);
+
+        // Determine the role based on the hidden input, default to 'individual'
+        $role = $request->input('role', 'individual'); // Default to 'individual' if 'role' not present
+        if (!in_array($role, ['admin', 'travel_agent', 'individual'])) { // Basic validation
+            $role = 'individual'; // Fallback to safe default if manipulated
+        }
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => $role, 
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
-    }
+        // --- DIRECT REDIRECT BASED ON ROLE ---
+        if ($user->role === 'admin') {
+            return redirect()->intended('/admin/dashboard');
+        } elseif ($user->role === 'travel_agent') {
+            return redirect()->intended('/travel-agent/home'); // Or whatever your travel agent dashboard route is
+        } else {
+            // Default redirect for 'individual' or other roles
+            return redirect()->intended('/'); // Or your main user dashboard
+        }
+        // --- END DIRECT REDIRECT ---
+            }
 }
