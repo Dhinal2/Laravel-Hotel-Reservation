@@ -108,43 +108,44 @@
                     </div>
                     <div class="main__right">
                         @guest
-                            {{-- Display Sign In and Sign Up buttons ONLY if the user is NOT logged in --}}
-                            <a href="#" class="theme-btn btn-style sm-btn border d-none d-lg-block" aria-label="Login Button" data-bs-toggle="modal" data-bs-target="#loginModal"><span>Sign In</span></a>
-                            <a href="#" class="theme-btn btn-style sm-btn border d-none d-lg-block" aria-label="Sign Up Button" data-bs-toggle="modal" data-bs-target="#signupModal"><span>Sign Up</span></a>
-                        @endguest
-                    
-                        @auth
-                            {{-- Display content ONLY if the user IS logged in --}}
-                            <div class="dropdown">
-                                <button class="theme-btn btn-style sm-btn fill d-none d-lg-block dropdown-toggle" type="button" id="userMenuDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span>{{ Auth::user()->name }}</span> {{-- Display the logged-in user's name --}}
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenuDropdown">
-                                    {{-- Common links for all logged-in users --}}
-                                    <li><a class="dropdown-item" href="{{ url('/reservations') }}">Reservations</a></li> {{-- You'll need to create this route --}}
-                                    <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Profile</a></li> {{-- Breeze's default profile route --}}
-                    
-                                    {{-- Role-specific links --}}
-                                    @if (Auth::user()->role === 'admin')
-                                        <li><a class="dropdown-item" href="{{ route('admin.index') }}">Admin Dashboard</a></li>
-                                    @elseif (Auth::user()->role === 'travel_agent')
-                                        <li><a class="dropdown-item" href="{{ route('travel_agent.home') }}">Agent Portal</a></li>
-                                    @endif
-                    
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li>
-                                        {{-- Logout Form --}}
-                                        <form method="POST" action="{{ route('logout') }}">
-                                            @csrf
-                                            <button type="submit" class="dropdown-item">Logout</button>
-                                        </form>
-                                    </li>
-                                </ul>
-                            </div>
-                        @endauth
-                    
+                        {{-- Display Sign In and Sign Up buttons ONLY if the user is NOT logged in --}}
+                        <a href="#" class="theme-btn btn-style sm-btn border d-none d-lg-block" aria-label="Login Button" data-bs-toggle="modal" data-bs-target="#loginModal"><span>Sign In</span></a>
+                        <a href="#" class="theme-btn btn-style sm-btn border d-none d-lg-block" aria-label="Sign Up Button" data-bs-toggle="modal" data-bs-target="#signupModal"><span>Sign Up</span></a>
+                
+                        {{-- NEW: Display Travel Agency Sign-Up ONLY if the user is NOT logged in --}}
+                        <a href="#" class="theme-btn btn-style sm-btn fill" data-bs-toggle="modal" data-bs-target="#travelAgentSignupModal"><span>Travel Agency Sign-Up</span></a>
+                    @endguest
+                
+                    @auth
+                        {{-- Display content ONLY if the user IS logged in --}}
+                        <div class="dropdown">
+                            <button class="theme-btn btn-style sm-btn fill d-none d-lg-block dropdown-toggle" type="button" id="userMenuDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span>{{ Auth::user()->name }}</span> {{-- Display the logged-in user's name --}}
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenuDropdown">
+                                {{-- Common links for all logged-in users --}}
+                                <li><a class="dropdown-item" href="{{ url('/reservations') }}">Reservations</a></li> {{-- You'll need to create this route --}}
+                                <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Profile</a></li> {{-- Breeze's default profile route --}}
+                
+                                {{-- Role-specific links --}}
+                                @if (Auth::user()->role === 'admin')
+                                    <li><a class="dropdown-item" href="{{ route('admin.index') }}">Admin Dashboard</a></li>
+                                @elseif (Auth::user()->role === 'travel_agent')
+                                    <li><a class="dropdown-item" href="{{ route('travel_agent.home') }}">Agent Portal</a></li>
+                                @endif
+                
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    {{-- Logout Form --}}
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item">Logout</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    @endauth
                     {{-- SignUp as Travel_Agency --}}
-                    <a href="#" class="theme-btn btn-style sm-btn fill" data-bs-toggle="modal" data-bs-target="#travelAgentSignupModal"><span>Travel Agency Sign-Up</span></a>
                     <button class="theme-btn btn-style sm-btn fill menu__btn d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                         <span><img src="{{ asset('assets/images/icon/menu-icon.svg') }}" alt=""></span>
                     </button>
