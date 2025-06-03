@@ -26,7 +26,13 @@ class PageController extends Controller
     {
         // The $room variable now contains the specific Room model instance
         // that matches the ID in the URL. If not found, it automatically throws a 404.
-        return view('guest.roomDetails', compact('room')); // Laravel uses dot notation for subdirectories
+        // Fetch similar rooms from the database
+        // This gets 3 random rooms that are not the current room being displayed.
+        $similarRooms = Room::where('id', '!=', $room->id)
+        ->inRandomOrder() // Orders them randomly
+        ->limit(3)        // Limits to 3 rooms
+        ->get();
+        return view('guest.roomDetails', compact('room','similarRooms')); // Laravel uses dot notation for subdirectories
     }
 
 // This method should be for displaying rooms on your main 'home' page (e.g., Urban Blue or a general room listing)
@@ -126,4 +132,6 @@ public function about()
 {
     return view('guest.about');
 }
+
+
 }

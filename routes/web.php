@@ -53,3 +53,4 @@ Route::get('/room-details/{room}', [PageController::class, 'showRoomDetails'])->
 
 //Route for checkout
 Route::get('/checkout/{roomid}', [CheckoutController::class, 'index'])->name('checkout');
+
