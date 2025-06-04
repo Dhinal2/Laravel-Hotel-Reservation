@@ -260,128 +260,201 @@
     <!-- room details area end -->
     @push('scripts')
 <script>
-    // Initialize jQuery UI Datepickers
-    // This script block should run after jQuery and jQuery UI are loaded (e.g., from layouts/app.blade.php)
-    $(function() {
-        $("#check__in").datepicker({
-            dateFormat: 'dd M yy', // Matches "15 Jun 2024" format for consistency
-            minDate: 0, // Cannot select past dates
-            onSelect: function(selectedDate) {
-                const minDate = new Date(selectedDate);
-                minDate.setDate(minDate.getDate() + 1); // Checkout must be at least 1 day after check-in
-                $("#check__out").datepicker("option", "minDate", minDate);
-                // Manually trigger the 'change' event on the input field
-                document.getElementById('check__in').dispatchEvent(new Event('change'));
-            }
-        });
+    // Introduce a slightly larger delay for the entire script execution.
+    // This gives other theme scripts (like plugins.min.js) even more time to finish their setup.
+    setTimeout(function() { 
+        $(function() { // jQuery's ready function. This ensures jQuery is fully loaded.
 
-        $("#check__out").datepicker({
-            dateFormat: 'dd M yy', // Matches "15 Jun 2024" format for consistency
-            minDate: 0, // Cannot select past dates (though onSelect for check__in handles it more strictly)
-            onSelect: function(selectedDate) {
-                // Manually trigger the 'change' event on the input field
-                document.getElementById('check__out').dispatchEvent(new Event('change'));
-            }
-        });
-    });
-</script>
+            // --- Define all your constants and elements here ---
+            const roomRate = parseFloat({{ $room->room_rate ?? 0 }});
+            const calculatedPriceSpan = document.getElementById('calculated_price');
+            const bookButton = document.getElementById('book-room-btn');
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const roomRate = parseFloat({{ $room->room_rate ?? 0 }});
-        const calculatedPriceSpan = document.getElementById('calculated_price');
-        const bookButton = document.getElementById('book-room-btn'); // Now correctly targets the link
+            const addOnCheckboxes = document.querySelectorAll('input[name="clean"], input[name="parking"], input[name="transport"], input[name="pet"]');
 
-        // Corrected IDs for date inputs (matching your HTML)
-        const checkInDateInput = document.getElementById('check__in');
-        const checkOutDateInput = document.getElementById('check__out');
+            // --- Helper function to parse date strings ---
+            function parseDateString(dateString) {
+                const parts = dateString.split('-');
+                const day = parseInt(parts[0], 10);
+                const month = parseInt(parts[1], 10) - 1; // Month is 0-indexed in JS (January is 0)
+                const year = parseInt(parts[2], 10);
 
-        // Add-on checkboxes from your HTML
-        const addOnCheckboxes = document.querySelectorAll('input[name="clean"], input[name="parking"], input[name="transport"], input[name="pet"]');
-
-        // Function to calculate number of nights
-        function calculateNights() {
-            const checkInValue = checkInDateInput ? checkInDateInput.value : '';
-            const checkOutValue = checkOutDateInput ? checkOutDateInput.value : '';
-
-            if (checkInValue && checkOutValue) {
-                // Ensure the date format is parsable by JavaScript's Date object.
-                // jQuery UI Datepicker's 'dd M yy' format is usually well-parsed.
-                const startDate = new Date(checkInValue);
-                const endDate = new Date(checkOutValue);
-
-                // Basic validation for valid dates
-                if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
-                    console.error('Invalid date format detected for calculation. Please ensure datepicker is working correctly.');
-                    return 1; // Default to 1 night if dates are invalid
+                if (!isNaN(day) && !isNaN(month) && !isNaN(year)) {
+                    return new Date(year, month, day);
                 }
-
-                const timeDiff = endDate.getTime() - startDate.getTime();
-                const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
-                return daysDiff > 0 ? daysDiff : 1; // Ensure at least 1 night
+                return new Date('Invalid Date'); // Return an invalid date if parsing fails
             }
-            return 1; // Default to 1 night if dates are not selected
-        }
 
-        // Function to update the total price displayed on roomDetails.blade.php
-        function updateRoomDetailsTotalPrice() {
-            const nights = calculateNights();
-            let currentTotalPrice = roomRate * nights;
+            // --- Function to calculate number of nights ---
+            function calculateNights() {
+                const checkInValue = $('#check__in').val(); 
+                const checkOutValue = $('#check__out').val(); 
 
-            addOnCheckboxes.forEach(checkbox => {
-                if (checkbox.checked) {
-                    currentTotalPrice += parseFloat(checkbox.value); // Add add-on price
+                console.log('--- calculateNights Debug (CALLED AFTER onSelect) ---');
+                console.log('Check-in Value from input (via jQuery .val()):', checkInValue);
+                console.log('Check-out Value from input (via jQuery .val()):', checkOutValue);
+
+                if (checkInValue && checkOutValue) {
+                    const startDate = parseDateString(checkInValue);
+                    const endDate = parseDateString(checkOutValue);
+
+                    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+                        console.error('ERROR: One or both dates are invalid after parsing.');
+                        return 1; // Default to 1 night if dates are invalid
+                    }
+
+                    // Check if end date is before start date (or same day)
+                    if (endDate.getTime() <= startDate.getTime()) {
+                        console.warn('WARNING: Check-out date is on or before Check-in date. Setting nights to 1.');
+                        return 1;
+                    }
+
+                    const timeDiff = endDate.getTime() - startDate.getTime();
+                    // Calculate days difference, rounding up to ensure at least 1 night for overnight stays
+                    const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                    
+                    console.log('Time Difference (ms):', timeDiff);
+                    console.log('Calculated Days Difference:', daysDiff);
+
+                    return daysDiff; // This will be at least 1 if endDate > startDate
+                }
+                console.log('Check-in or Check-out date not selected yet. Defaulting to 1 night.');
+                return 1; // Default to 1 night if dates are not selected
+            }
+
+            // --- Function to update the total price ---
+            function updateRoomDetailsTotalPrice() {
+                console.log('--- updateRoomDetailsTotalPrice Debug ---');
+                console.log('Initial roomRate:', roomRate);
+
+                const nights = calculateNights();
+                console.log('Nights calculated:', nights);
+
+                let currentTotalPrice = roomRate * nights;
+                console.log('Price after nights (roomRate * nights):', currentTotalPrice);
+
+                addOnCheckboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        const addOnPrice = parseFloat(checkbox.value);
+                        if (!isNaN(addOnPrice)) {
+                            currentTotalPrice += addOnPrice;
+                            console.log(`Add-on "${checkbox.name}" checked. Adding ${addOnPrice}. Current Total: ${currentTotalPrice}`);
+                        } else {
+                            console.warn(`Add-on "${checkbox.name}" has invalid value: ${checkbox.value}`);
+                        }
+                    }
+                });
+                
+                calculatedPriceSpan.textContent = `$${currentTotalPrice.toFixed(2)}`;
+                console.log('Final Calculated Price:', calculatedPriceSpan.textContent);
+            }
+
+            // --- Datepicker Initializations ---
+
+            // IMPORTANT: Destroy any pre-existing datepicker instances to prevent conflicts
+            // Check if the element has the 'hasDatepicker' class, which jQuery UI adds when initialized
+            if ($("#check__in").hasClass('hasDatepicker')) {
+                $("#check__in").datepicker("destroy");
+                console.log("DEBUG: Destroyed existing datepicker on #check__in.");
+            }
+            if ($("#check__out").hasClass('hasDatepicker')) {
+                $("#check__out").datepicker("destroy");
+                console.log("DEBUG: Destroyed existing datepicker on #check__out.");
+            }
+
+            // Re-initialize datepickers with our specific onSelect callback
+            $("#check__in").datepicker({
+                dateFormat: 'dd-mm-yy',
+                minDate: 0, // Cannot select dates before today
+                onSelect: function(selectedDate) {
+                    // This ALERT is crucial to see if this onSelect is firing!
+                    //alert('Check-in date selected: ' + selectedDate); 
+                    console.log('*** ONSELECT DEBUG: Check-in date selected (raw): ' + selectedDate);
+                    console.log('*** ONSELECT DEBUG: Check-in input value via $(this).val(): ' + $(this).val());
+
+                    // Set minDate for check-out to one day after the selected check-in date
+                    const minCheckoutDate = parseDateString(selectedDate);
+                    minCheckoutDate.setDate(minCheckoutDate.getDate() + 1); // Add one day
+
+                    // Format the minCheckoutDate back to 'dd-mm-yy' for the datepicker option
+                    const formattedMinCheckoutDate = $.datepicker.formatDate('dd-mm-yy', minCheckoutDate);
+                    $("#check__out").datepicker("option", "minDate", formattedMinCheckoutDate);
+                    
+                    updateRoomDetailsTotalPrice(); // Update price immediately after check-in selection
+                    
+                    $(this).datepicker('hide'); // Hide check-in datepicker
+                    $("#check__out").focus(); // Automatically focus on check-out
                 }
             });
-            calculatedPriceSpan.textContent = `$${currentTotalPrice.toFixed(2)}`;
-        }
 
-        // Initial calculation when the page loads
-        updateRoomDetailsTotalPrice();
+            $("#check__out").datepicker({
+                dateFormat: 'dd-mm-yy',
+                minDate: 0, // This will be dynamically updated by the check-in date's onSelect
+                onSelect: function(selectedDate) {
+                    // This ALERT is crucial to see if this onSelect is firing!
+                    //alert('Check-out date selected: ' + selectedDate);
+                    console.log('*** ONSELECT DEBUG: Check-out date selected (raw): ' + selectedDate);
+                    console.log('*** ONSELECT DEBUG: Check-out input value via $(this).val(): ' + $(this).val());
 
-        // Event listeners for date changes (these are now primarily triggered by the datepicker's onSelect)
-        // Keeping them ensures updates if inputs are changed by other means, though less likely with a datepicker.
-        if (checkInDateInput) checkInDateInput.addEventListener('change', updateRoomDetailsTotalPrice);
-        if (checkOutDateInput) checkOutDateInput.addEventListener('change', updateRoomDetailsTotalPrice);
+                    updateRoomDetailsTotalPrice(); // Update price immediately after check-out selection
+                    
+                    $(this).datepicker('hide'); // Hide check-out datepicker
+                }
+            });
 
-        // Event listeners for add-on checkbox changes
-        addOnCheckboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', updateRoomDetailsTotalPrice);
-        });
+            // --- Initial calculation when the page loads ---
+            updateRoomDetailsTotalPrice(); // This will show 1 night initially
 
-        // Modify the "Book Your Room" button to pass data
-        if (bookButton) { // Ensure button exists before attaching listener
+            // --- Event listeners for add-on checkbox changes ---
+            addOnCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', updateRoomDetailsTotalPrice);
+            });
+
+            // --- Modify the "Book Your Room" button ---
             bookButton.addEventListener('click', function(event) {
-                event.preventDefault(); // Stop the default link behavior
+                event.preventDefault();
 
-                const checkInDate = checkInDateInput ? checkInDateInput.value : '';
-                const checkOutDate = checkOutDateInput ? checkOutDateInput.value : '';
+                const checkInDate = $('#check__in').val(); 
+                const checkOutDate = $('#check__out').val(); 
                 const roomId = {{ $room->id }};
+
+                // --- NEW: Capture Adults count ---
+                const adultsCount = $('#adult').val(); 
+                console.log('DEBUG: Selected Adults:', adultsCount);
+
 
                 if (!checkInDate || !checkOutDate) {
                     alert('Please select both check-in and check-out dates from the calendar.');
                     return;
                 }
 
-                // Collect selected add-ons
                 const selectedAddOns = [];
                 addOnCheckboxes.forEach(checkbox => {
                     if (checkbox.checked) {
-                        selectedAddOns.push(checkbox.name); // Push the name (e.g., 'clean', 'transport')
+                        selectedAddOns.push(checkbox.name);
                     }
                 });
 
-                // Construct the URL with query parameters for dates and selected add-ons
-                // The add_ons parameter will be a comma-separated string like 'clean,transport'
-                const checkoutUrl = `{{ route('checkout', ['roomid' => ':roomid']) }}`
-                    .replace(':roomid', roomId) +
-                    `&check_in=${checkInDate}&check_out=${checkOutDate}` +
-                    (selectedAddOns.length > 0 ? `&add_ons=${selectedAddOns.join(',')}` : '');
+                // --- REVISED URL CONSTRUCTION ---
+                let queryParams = new URLSearchParams();
+                queryParams.append('check_in', checkInDate);
+                queryParams.append('check_out', checkOutDate);
+                // --- NEW: Append Adults count to URL ---
+                queryParams.append('adults', adultsCount); 
+
+                if (selectedAddOns.length > 0) {
+                    queryParams.append('add_ons', selectedAddOns.join(','));
+                }
+
+                const baseUrl = `{{ route('checkout', ['roomid' => ':roomid']) }}`.replace(':roomid', roomId);
+                const checkoutUrl = baseUrl + '?' + queryParams.toString(); 
 
                 window.location.href = checkoutUrl;
             });
-        }
-    });
+
+            console.log('DEBUG: Custom JS block executed after 500ms delay.');
+        });
+    }, 500); // Increased delay to 500 milliseconds (half a second)
 </script>
 @endpush
 
@@ -398,7 +471,11 @@
                 </div>
             </div>
             <div class="row g-30">
-                {{-- Loop through the similar rooms fetched from the database --}}
+                @php
+                    // Initialize a counter to cycle through your hardcoded image filenames (1.webp, 2.webp, 3.webp)
+                    $imageIndex = 1;
+                @endphp
+    
                 @foreach($similarRooms as $similarRoom)
                 <div class="col-lg-6 col-xl-4 col-md-6">
                     <div class="room__card">
@@ -406,13 +483,14 @@
                             <div class="room__card__image">
                                 {{-- Link to the specific similar room's details page --}}
                                 <a href="{{ route('room.show', $similarRoom->id) }}">
-                                    {{-- Use the image column from the similar room --}}
-                                    <img src="{{ asset('assets/images/pages/room/' . $similarRoom->image) }}" width="420" height="310" alt="{{ $similarRoom->room_name }}">
+                                    {{-- Use hardcoded image paths, cycling through 1.webp, 2.webp, 3.webp --}}
+                                    {{-- Ensure you have 1.webp, 2.webp, 3.webp in public/assets/images/pages/room/ --}}
+                                    <img src="{{ asset('assets/images/pages/room/' . $imageIndex . '.webp') }}" width="420" height="310" alt="{{ $similarRoom->room_name }}">
                                 </a>
                             </div>
                         </div>
                         <div class="room__card__meta">
-                            {{-- Link and display the similar room's name --}}
+                            {{-- Link and display the similar room's name (dynamic from DB) --}}
                             <a href="{{ route('room.show', $similarRoom->id) }}" class="room__card__title h5">{{ $similarRoom->room_name }}</a>
                             <div class="room__card__meta__info">
                                 {{-- These are hardcoded as your database doesn't seem to have specific 'size' or 'capacity' columns --}}
@@ -420,7 +498,7 @@
                                 <span><i class="flaticon-user"></i>5 Person</span>
                             </div>
                             <div class="room__price__tag">
-                                {{-- Display the similar room's rate --}}
+                                {{-- Display the similar room's rate (dynamic from DB) --}}
                                 <span class="h6 d-block">{{ $similarRoom->room_rate }}$</span>
                             </div>
                             {{-- Link to the specific similar room's details page --}}
@@ -428,6 +506,13 @@
                         </div>
                     </div>
                 </div>
+                @php
+                    // Increment for the next image. If it goes past 3 (or whatever number of hardcoded images you have), reset it.
+                    $imageIndex++;
+                    if ($imageIndex > 3) { 
+                        $imageIndex = 1;
+                    }
+                @endphp
                 @endforeach
             </div>
         </div>

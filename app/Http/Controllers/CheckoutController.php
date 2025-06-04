@@ -13,7 +13,9 @@ class CheckoutController extends Controller
 
         $checkIn = $request->query('check_in');
         $checkOut = $request->query('check_out');
-        $selectedAddOnKeys = $request->query('add_ons') ? explode(',', $request->query('add_ons')) : []; // Get selected add-ons
+        // --- NEW: Get adults count ---
+        $adults = $request->query('adults', 1); // Default to 1 if not provided
+        $selectedAddOnKeys = $request->query('add_ons') ? explode(',', $request->query('add_ons')) : [];
 
         $nights = 0;
         if ($checkIn && $checkOut) {
@@ -21,44 +23,45 @@ class CheckoutController extends Controller
                 $startDate = Carbon::parse($checkIn);
                 $endDate = Carbon::parse($checkOut);
                 $nights = $startDate->diffInDays($endDate);
-                if ($nights < 1) { $nights = 1; }
+                if ($nights < 1) { 
+                    $nights = 1; 
+                }
             } catch (\Exception $e) {
                 $nights = 1;
-                $checkIn = null;
-                $checkOut = null;
+                $checkIn = null; 
+                $checkOut = null; 
             }
         } else {
             $nights = 1;
         }
 
-        // Define ALL available add-ons and their prices on the BACKEND
-        // This is important for security to prevent manipulation from frontend.
         $availableAddOns = [
             'clean' => ['label' => 'Room Clean', 'price' => 12.00],
-            'parking' => ['label' => 'Parking', 'price' => 0.00], // Free
+            'parking' => ['label' => 'Parking', 'price' => 0.00], 
             'transport' => ['label' => 'Airport Transport', 'price' => 30.00],
             'pet' => ['label' => 'Pet-Friendly', 'price' => 40.00],
         ];
 
-        $baseRoomPrice = $room->room_rate * $nights; // Use room_rate
+        $baseRoomPrice = $room->room_rate * $nights;
 
         $totalAddOnsPrice = 0;
-        $selectedAddOnsDetails = []; // To pass details of selected add-ons to the view
+        $selectedAddOnsDetails = [];
 
         foreach ($selectedAddOnKeys as $key) {
             if (isset($availableAddOns[$key])) {
-                $totalAddOnsPrice += $availableAddOns[$key]['price'];
-                $selectedAddOnsDetails[] = $availableAddOns[$key]; // Store full details
+                $addOnPricePerStay = $availableAddOns[$key]['price'] * $nights;
+                $totalAddOnsPrice += $addOnPricePerStay;
+                $selectedAddOnsDetails[] = [
+                    'label' => $availableAddOns[$key]['label'],
+                    'price' => $addOnPricePerStay
+                ];
             }
         }
 
-        // Calculate total after add-ons, before tax
         $subtotal = $baseRoomPrice + $totalAddOnsPrice;
-
-        $taxRate = 0.05; // Example tax rate (5%)
+        $taxRate = 0.05; 
         $taxAmount = $subtotal * $taxRate;
         $finalTotal = $subtotal + $taxAmount;
-
 
         return view('checkout', compact(
             'room',
@@ -66,11 +69,12 @@ class CheckoutController extends Controller
             'checkOut',
             'nights',
             'baseRoomPrice',
-            'selectedAddOnsDetails', // Pass the details of only selected add-ons
+            'selectedAddOnsDetails', 
             'subtotal',
             'taxAmount',
             'taxRate',
-            'finalTotal'
+            'finalTotal',
+            'adults' // --- NEW: Pass adults count to the view ---
         ));
     }
 }

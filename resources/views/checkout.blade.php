@@ -34,7 +34,7 @@
                 <h1 class="home-heading">{{ $room->room_name }}</h1>
                 <p class="home-price"><em>{{ number_format($room->room_rate, 2) }} USD </em>/ night</p>
                 <hr class="left-hr" />
-                <p class="home-desc"><em>Entire home </em>for <em>2 guest</em></p>
+                <p class="home-desc"><em>Entire Room </em>for <em>{{ $adults }} guest{{ $adults > 1 ? 's' : '' }}</em></p>
                 <p class="home-desc">
                     <em>{{ $checkIn ?? 'Check-in N/A' }} </em>to <em>{{ $checkOut ?? 'Check-out N/A' }}</em> ({{ $nights }} nights)
                 </p>
