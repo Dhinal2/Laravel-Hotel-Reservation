@@ -181,3 +181,54 @@ hr {
   box-shadow: 0 0 0 0.8rem rgba(139, 139, 107, 0.5);
   border-radius: 8px;
 }
+
+/* Existing input styling */
+.form-box input {
+  font-family: inherit;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  width: 100%;
+  /* Add common styling like border, background for inputs */
+  border: 1px solid #ccc; /* Add a border */
+  background-color: #f8f8f8; /* A light background color */
+  border-radius: 4px; /* Slightly rounded corners */
+}
+
+/* Add/Modify styling for select elements */
+.form-box select {
+  /* Keep existing basic styling */
+  padding: 0.5rem;
+  font-family: inherit;
+  font-size: 1.2rem;
+  width: auto;         /* Allow select to naturally size based on content */
+  min-width: 8em;      /* Add a minimum width to ensure space, adjust as needed */
+  border: 1px solid #ccc;
+  background-color: #f8f8f8;
+  border-radius: 4px;
+
+  /* Hide default browser arrow */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  /* Custom arrow styling */
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23000%22%20d%3D%22M287%2C114.7L159.2%2C242.5c-4.5%2C4.5-10.6%2C6.7-16.7%2C6.7s-12.2-2.2-16.7-6.7L5.3%2C114.7c-9.1-9.1-9.1-23.7%2C0-32.8c9.1-9.1%2C23.7-9.1%2C32.8%2C0l115.6%2C115.6l115.6-115.6c9.1-9.1%2C23.7-9.1%2C32.8%2C0C296.1%2C91%2C296.1%2C105.6%2C287%2C114.7z%22%2F%3E%3C%2Fsvg%3E');
+  background-repeat: no-repeat;
+  background-position: right 1em center; /* Moved arrow further from the right edge (increased from 0.7em) */
+  background-size: 0.65em auto, 100%;
+
+  /* CRUCIAL FIXES FOR SPACING */
+  padding-right: 2.5em; /* Increased right padding to give text more room before the arrow */
+}
+
+/* Also, ensure your .card-experation div correctly spaces its children */
+.card-experation {
+    display: flex;       /* Use flexbox to align month and year side-by-side */
+    gap: 1rem;           /* Adds space BETWEEN the select boxes */
+    align-items: center; /* Vertically aligns items in the flex container */
+}
+
+/* Optionally, you might want to give the label some margin */
+.card-experation label {
+    margin-right: 0.25em; /* Small space between label and select box */
+}

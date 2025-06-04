@@ -13,8 +13,11 @@ class CheckoutController extends Controller
 
         $checkIn = $request->query('check_in');
         $checkOut = $request->query('check_out');
-        // --- NEW: Get adults count ---
-        $adults = $request->query('adults', 1); // Default to 1 if not provided
+        $adults = $request->query('adults', 1); 
+        $children = $request->query('children', 0); 
+        $extraBeds = $request->query('extra_beds', 0); 
+        $numRooms = $request->query('num_rooms', 1); 
+        
         $selectedAddOnKeys = $request->query('add_ons') ? explode(',', $request->query('add_ons')) : [];
 
         $nights = 0;
@@ -35,28 +38,49 @@ class CheckoutController extends Controller
             $nights = 1;
         }
 
+        // Define ALL available add-ons and their FLAT prices on the BACKEND
         $availableAddOns = [
-            'clean' => ['label' => 'Room Clean', 'price' => 12.00],
-            'parking' => ['label' => 'Parking', 'price' => 0.00], 
-            'transport' => ['label' => 'Airport Transport', 'price' => 30.00],
-            'pet' => ['label' => 'Pet-Friendly', 'price' => 40.00],
+            'clean' => ['label' => 'Room Clean', 'price' => 12.00], // Flat rate per booking
+            'parking' => ['label' => 'Parking', 'price' => 0.00],   // Flat rate per booking
+            'transport' => ['label' => 'Airport Transport', 'price' => 30.00], // Flat rate per booking
+            'pet' => ['label' => 'Pet-Friendly', 'price' => 40.00], // Flat rate per booking
+            'extra_bed_cost' => ['label' => 'Extra Bed', 'price' => 20.00], // Flat rate per bed, NOT per night or per room
         ];
 
-        $baseRoomPrice = $room->room_rate * $nights;
+        // This calculation remains the same, as it's the core room booking cost
+        $baseRoomPrice = $room->room_rate * $nights * $numRooms;
 
         $totalAddOnsPrice = 0;
-        $selectedAddOnsDetails = [];
+        $selectedAddOnsDetails = []; 
 
+        // Process standard add-ons (now using flat rates)
         foreach ($selectedAddOnKeys as $key) {
             if (isset($availableAddOns[$key])) {
-                $addOnPricePerStay = $availableAddOns[$key]['price'] * $nights;
-                $totalAddOnsPrice += $addOnPricePerStay;
+                $addOnPrice = $availableAddOns[$key]['price'];
+                $addOnLabel = $availableAddOns[$key]['label'];
+                
+                // All these add-ons are now treated as flat rates per booking
+                $addOnTotalCost = $addOnPrice;
+                
+                $totalAddOnsPrice += $addOnTotalCost;
                 $selectedAddOnsDetails[] = [
-                    'label' => $availableAddOns[$key]['label'],
-                    'price' => $addOnPricePerStay
+                    'label' => $addOnLabel,
+                    'price' => $addOnTotalCost
                 ];
             }
         }
+
+        // Calculate and add Extra Bed cost if selected (now using flat rate per bed)
+        if ($extraBeds > 0 && isset($availableAddOns['extra_bed_cost'])) {
+            // Extra bed cost is per bed, flat rate per booking (not multiplied by nights or rooms)
+            $extraBedTotalCost = $availableAddOns['extra_bed_cost']['price'] * $extraBeds; 
+            $totalAddOnsPrice += $extraBedTotalCost;
+            $selectedAddOnsDetails[] = [
+                'label' => $availableAddOns['extra_bed_cost']['label'] . ' x ' . $extraBeds, 
+                'price' => $extraBedTotalCost
+            ];
+        }
+
 
         $subtotal = $baseRoomPrice + $totalAddOnsPrice;
         $taxRate = 0.05; 
@@ -74,7 +98,10 @@ class CheckoutController extends Controller
             'taxAmount',
             'taxRate',
             'finalTotal',
-            'adults' // --- NEW: Pass adults count to the view ---
+            'adults', 
+            'children', 
+            'extraBeds', 
+            'numRooms'   
         ));
     }
 }

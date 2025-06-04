@@ -51,6 +51,14 @@ Route::get('/urban-redrooms', [PageController::class, 'urbanRedRooms'])->name('u
 //Room details get
 Route::get('/room-details/{room}', [PageController::class, 'showRoomDetails'])->name('room.show');
 
-//Route for checkout
-Route::get('/checkout/{roomid}', [CheckoutController::class, 'index'])->name('checkout');
+// Route for displaying the checkout page (accessible by anyone)
+Route::get('/checkout/{roomid}', [\App\Http\Controllers\CheckoutController::class, 'index'])->name('checkout');
+
+// Route for processing the checkout form submission (accessible by guests)
+// Make sure this line exists and is uncommented
+Route::post('/checkout/process', [\App\Http\Controllers\CheckoutController::class, 'processCheckout'])->name('process.checkout');
+
+// Route for booking confirmation (accessible by guests after booking)
+// Make sure this line exists and is uncommented
+Route::get('/booking-confirmation', [\App\Http\Controllers\CheckoutController::class, 'bookingConfirmation'])->name('booking.confirmation');
 
